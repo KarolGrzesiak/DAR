@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hml version="2.0">
+    <type_set>
+        <type id="tpe_1" name="boolean" base="numeric" length="1" scale="0">
+            <desc>boolean</desc>
+            <domain>
+                <value is="0"/>
+                <value is="1"/>
+            </domain>
+        </type>
+        <type id="tpe_2" name="integer" base="numeric" length="10" scale="0">
+            <desc>integer</desc>
+            <domain>
+                <value from="-2147483648" to="2147483647"/>
+            </domain>
+        </type>
+        <type id="tpe_ard_default" name="ard_default_type" base="symbolic">
+            <domain ordered="yes">
+                <value is="none" num="1"/>
+            </domain>
+        </type>
+        <type id="tpe_3" name="typeAccidentNo" base="numeric" length="10" scale="0">
+            <desc>The number of accidents in the last yaer</desc>
+            <domain>
+                <value from="0" to="1000"/>
+            </domain>
+        </type>
+        <type id="tpe_4" name="typeBaseCharge" base="numeric" length="7" scale="2">
+            <desc>The base payment</desc>
+            <domain>
+                <value from="0.00" to="99999.00"/>
+            </domain>
+        </type>
+        <type id="tpe_5" name="typeAge" base="numeric" length="10" scale="0">
+            <desc>The age of car, driver, etc</desc>
+            <domain>
+                <value from="0" to="300"/>
+            </domain>
+        </type>
+        <type id="tpe_6" name="typeCarCapacity" base="numeric" length="10" scale="0">
+            <desc>The car capacity in ccm</desc>
+            <domain>
+                <value from="0" to="100000"/>
+            </domain>
+        </type>
+        <type id="tpe_7" name="typeDiscount" base="numeric" length="10" scale="0">
+            <desc>The sum of discounts in percents</desc>
+            <domain>
+                <value from="-100" to="10000"/>
+            </domain>
+        </type>
+        <type id="tpe_8" name="typeClientClass" base="numeric" length="10" scale="0">
+            <desc>The class of a client</desc>
+            <domain>
+                <value from="-1" to="9"/>
+            </domain>
+        </type>
+        <type id="tpe_9" name="typeInstallmentsNo" base="numeric" length="10" scale="0">
+            <domain>
+                <value is="1"/>
+                <value is="2"/>
+            </domain>
+        </type>
+        <type id="tpe_10" name="typePayment" base="numeric" length="7" scale="2">
+            <domain>
+                <value from="0.00" to="99999.00"/>
+            </domain>
+        </type>
+        <type id="tpe_11" name="typeInsuranceNo" base="numeric" length="10" scale="0">
+            <domain>
+                <value from="0" to="1000"/>
+            </domain>
+        </type>
+        <type id="tpe_12" name="typeseatsNo" base="numeric" length="10" scale="0">
+            <domain>
+                <value from="2" to="100"/>
+            </domain>
+        </type>
+    </type_set>
+    <attribute_set>
+        <attr id="att_ard_2" type="tpe_ard_default" name="BaseRate" clb=" " abbrev="Base1" class="simple" comm="io"/>
+        <attr id="att_ard_3" type="tpe_ard_default" name="BonusMalus" clb=" " abbrev="Bonu1" class="simple" comm="io"/>
+        <attr id="att_ard_1" type="tpe_ard_default" name="CarInsurance" clb=" " abbrev="CarI1" class="simple" comm="io"/>
+        <attr id="att_ard_7" type="tpe_ard_default" name="CarPremium" clb=" " abbrev="CarP1" class="simple" comm="io"/>
+        <attr id="att_ard_6" type="tpe_ard_default" name="DriverPremium" clb=" " abbrev="Driv1" class="simple" comm="io"/>
+        <attr id="att_ard_8" type="tpe_ard_default" name="OtherPremium" clb=" " abbrev="Othe1" class="simple" comm="io"/>
+        <attr id="att_ard_5" type="tpe_ard_default" name="Payment" clb=" " abbrev="Paym1" class="simple" comm="io"/>
+        <attr id="att_ard_4" type="tpe_ard_default" name="Premium" clb=" " abbrev="Prem1" class="simple" comm="io"/>
+        <attr id="att_ard_24" type="tpe_3" name="accidentNo" clb=" " abbrev="acci1" class="simple" comm="in">
+            <desc>The number of accidents in the last year</desc>
+        </attr>
+        <attr id="att_ard_13" type="tpe_1" name="antiqueCar" clb=" " abbrev="anti1" class="simple" comm="in">
+            <desc>Indicates if the car is a antique car</desc>
+        </attr>
+        <attr id="att_ard_22" type="tpe_4" name="baseCharge" clb=" " abbrev="base1" class="simple" comm="io">
+            <desc>The base insurance charge</desc>
+        </attr>
+        <attr id="att_ard_12" type="tpe_5" name="carAge" clb=" " abbrev="carA1" class="simple" comm="in">
+            <desc>The car age</desc>
+        </attr>
+        <attr id="att_ard_23" type="tpe_6" name="carCapacity" clb=" " abbrev="carC1" class="simple" comm="in">
+            <desc>Car capacity</desc>
+        </attr>
+        <attr id="att_ard_16" type="tpe_7" name="carDiscount" clb=" " abbrev="carD1" class="simple" comm="io">
+            <desc>The sum of the car discounts</desc>
+        </attr>
+        <attr id="att_ard_27" type="tpe_8" name="clientClass" clb=" " abbrev="clie1" class="simple" comm="io">
+            <desc>The class of a client</desc>
+        </attr>
+        <attr id="att_ard_9" type="tpe_5" name="driverAge" clb=" " abbrev="driv1" class="simple" comm="in">
+            <desc>The age of a driver</desc>
+        </attr>
+        <attr id="att_ard_11" type="tpe_7" name="driverDiscount" clb=" " abbrev="driv2" class="simple" comm="io">
+            <desc>The sum of driver discounts</desc>
+        </attr>
+        <attr id="att_ard_10" type="tpe_5" name="driverLicenceAge" clb=" " abbrev="driv3" class="simple" comm="in">
+            <desc>The driver age</desc>
+        </attr>
+        <attr id="att_ard_17" type="tpe_9" name="installmentNo" clb=" " abbrev="inst1" class="simple" comm="in">
+            <desc>The number of installments</desc>
+        </attr>
+        <attr id="att_ard_26" type="tpe_11" name="insuranceCarsNo" clb=" " abbrev="insu1" class="simple" comm="in">
+            <desc>The number of car insurnace</desc>
+        </attr>
+        <attr id="att_ard_18" type="tpe_1" name="insuranceCont" clb=" " abbrev="insu2" class="simple" comm="in">
+            <desc>Indicates if it is a insurance continuation</desc>
+        </attr>
+        <attr id="att_ard_20" type="tpe_1" name="insuranceHistory" clb=" " abbrev="insu3" class="simple" comm="in">
+            <desc>Indicates if a client has a insurance history</desc>
+        </attr>
+        <attr id="att_ard_21" type="tpe_7" name="otherDiscount" clb=" " abbrev="othe1" class="simple" comm="io">
+            <desc>The sum of others discounts</desc>
+        </attr>
+        <attr id="att_ard_19" type="tpe_1" name="otherInsurance" clb=" " abbrev="othe2" class="simple" comm="in">
+            <desc>Indicates if a client has an other insurance</desc>
+        </attr>
+        <attr id="att_ard_25" type="tpe_10" name="payment" clb=" " abbrev="paym1" class="simple" comm="out">
+            <desc>The final insurance price</desc>
+        </attr>
+        <attr id="att_ard_14" type="tpe_12" name="seatsNo" clb=" " abbrev="seat1" class="simple" comm="in">
+            <desc>The number of seats in the car</desc>
+        </attr>
+        <attr id="att_ard_15" type="tpe_1" name="technical" clb=" " abbrev="tech1" class="simple" comm="in">
+            <desc>Indicates if a car passed test of technical state</desc>
+        </attr>
+    </attribute_set>
+    <property_set>
+        <property id="prp_1">
+            <attref ref="att_ard_1"/>
+        </property>
+        <property id="prp_2">
+            <attref ref="att_ard_2"/>
+            <attref ref="att_ard_3"/>
+            <attref ref="att_ard_5"/>
+            <attref ref="att_ard_4"/>
+        </property>
+        <property id="prp_3">
+            <attref ref="att_ard_2"/>
+            <attref ref="att_ard_3"/>
+            <attref ref="att_ard_4"/>
+        </property>
+        <property id="prp_4">
+            <attref ref="att_ard_5"/>
+        </property>
+        <property id="prp_5">
+            <attref ref="att_ard_25"/>
+        </property>
+        <property id="prp_6">
+            <attref ref="att_ard_4"/>
+        </property>
+        <property id="prp_7">
+            <attref ref="att_ard_2"/>
+        </property>
+        <property id="prp_8">
+            <attref ref="att_ard_3"/>
+        </property>
+        <property id="prp_9">
+            <attref ref="att_ard_7"/>
+            <attref ref="att_ard_6"/>
+            <attref ref="att_ard_8"/>
+        </property>
+        <property id="prp_10">
+            <attref ref="att_ard_8"/>
+        </property>
+        <property id="prp_11">
+            <attref ref="att_ard_7"/>
+        </property>
+        <property id="prp_12">
+            <attref ref="att_ard_6"/>
+        </property>
+        <property id="prp_13">
+            <attref ref="att_ard_11"/>
+            <attref ref="att_ard_9"/>
+            <attref ref="att_ard_10"/>
+        </property>
+        <property id="prp_14">
+            <attref ref="att_ard_12"/>
+            <attref ref="att_ard_16"/>
+            <attref ref="att_ard_14"/>
+            <attref ref="att_ard_15"/>
+            <attref ref="att_ard_13"/>
+        </property>
+        <property id="prp_15">
+            <attref ref="att_ard_26"/>
+            <attref ref="att_ard_17"/>
+            <attref ref="att_ard_18"/>
+            <attref ref="att_ard_19"/>
+            <attref ref="att_ard_20"/>
+            <attref ref="att_ard_21"/>
+        </property>
+        <property id="prp_16">
+            <attref ref="att_ard_23"/>
+            <attref ref="att_ard_22"/>
+        </property>
+        <property id="prp_17">
+            <attref ref="att_ard_27"/>
+            <attref ref="att_ard_24"/>
+        </property>
+        <property id="prp_18">
+            <attref ref="att_ard_9"/>
+            <attref ref="att_ard_10"/>
+        </property>
+        <property id="prp_19">
+            <attref ref="att_ard_11"/>
+        </property>
+        <property id="prp_20">
+            <attref ref="att_ard_12"/>
+            <attref ref="att_ard_14"/>
+            <attref ref="att_ard_15"/>
+            <attref ref="att_ard_13"/>
+        </property>
+        <property id="prp_21">
+            <attref ref="att_ard_16"/>
+        </property>
+        <property id="prp_22">
+            <attref ref="att_ard_26"/>
+            <attref ref="att_ard_17"/>
+            <attref ref="att_ard_18"/>
+            <attref ref="att_ard_19"/>
+            <attref ref="att_ard_20"/>
+        </property>
+        <property id="prp_23">
+            <attref ref="att_ard_21"/>
+        </property>
+        <property id="prp_24">
+            <attref ref="att_ard_24"/>
+        </property>
+        <property id="prp_25">
+            <attref ref="att_ard_27"/>
+        </property>
+        <property id="prp_26">
+            <attref ref="att_ard_23"/>
+        </property>
+        <property id="prp_27">
+            <attref ref="att_ard_22"/>
+        </property>
+        <property id="prp_28">
+            <attref ref="att_ard_9"/>
+        </property>
+        <property id="prp_29">
+            <attref ref="att_ard_10"/>
+        </property>
+        <property id="prp_30">
+            <attref ref="att_ard_15"/>
+        </property>
+        <property id="prp_31">
+            <attref ref="att_ard_13"/>
+        </property>
+        <property id="prp_32">
+            <attref ref="att_ard_12"/>
+        </property>
+        <property id="prp_33">
+            <attref ref="att_ard_14"/>
+        </property>
+        <property id="prp_34">
+            <attref ref="att_ard_26"/>
+        </property>
+        <property id="prp_35">
+            <attref ref="att_ard_17"/>
+        </property>
+        <property id="prp_36">
+            <attref ref="att_ard_20"/>
+        </property>
+        <property id="prp_37">
+            <attref ref="att_ard_18"/>
+        </property>
+        <property id="prp_38">
+            <attref ref="att_ard_19"/>
+        </property>
+    </property_set>
+    <tph>
+        <trans id="tra_01" src="prp_1" dst="prp_2"/>
+        <trans id="tra_02" src="prp_2" dst="prp_3"/>
+        <trans id="tra_03" src="prp_2" dst="prp_4"/>
+        <trans id="tra_04" src="prp_4" dst="prp_5"/>
+        <trans id="tra_05" src="prp_3" dst="prp_6"/>
+        <trans id="tra_06" src="prp_3" dst="prp_7"/>
+        <trans id="tra_07" src="prp_3" dst="prp_8"/>
+        <trans id="tra_08" src="prp_6" dst="prp_9"/>
+        <trans id="tra_09" src="prp_9" dst="prp_10"/>
+        <trans id="tra_10" src="prp_9" dst="prp_11"/>
+        <trans id="tra_11" src="prp_9" dst="prp_12"/>
+        <trans id="tra_12" src="prp_12" dst="prp_13"/>
+        <trans id="tra_13" src="prp_11" dst="prp_14"/>
+        <trans id="tra_14" src="prp_10" dst="prp_15"/>
+        <trans id="tra_15" src="prp_7" dst="prp_16"/>
+        <trans id="tra_16" src="prp_8" dst="prp_17"/>
+        <trans id="tra_17" src="prp_13" dst="prp_18"/>
+        <trans id="tra_18" src="prp_13" dst="prp_19"/>
+        <trans id="tra_19" src="prp_14" dst="prp_20"/>
+        <trans id="tra_20" src="prp_14" dst="prp_21"/>
+        <trans id="tra_21" src="prp_15" dst="prp_22"/>
+        <trans id="tra_22" src="prp_15" dst="prp_23"/>
+        <trans id="tra_23" src="prp_17" dst="prp_24"/>
+        <trans id="tra_24" src="prp_17" dst="prp_25"/>
+        <trans id="tra_25" src="prp_16" dst="prp_26"/>
+        <trans id="tra_26" src="prp_16" dst="prp_27"/>
+        <trans id="tra_27" src="prp_18" dst="prp_28"/>
+        <trans id="tra_28" src="prp_18" dst="prp_29"/>
+        <trans id="tra_29" src="prp_20" dst="prp_30"/>
+        <trans id="tra_30" src="prp_20" dst="prp_31"/>
+        <trans id="tra_31" src="prp_20" dst="prp_32"/>
+        <trans id="tra_32" src="prp_20" dst="prp_33"/>
+        <trans id="tra_33" src="prp_22" dst="prp_34"/>
+        <trans id="tra_34" src="prp_22" dst="prp_35"/>
+        <trans id="tra_35" src="prp_22" dst="prp_36"/>
+        <trans id="tra_36" src="prp_22" dst="prp_37"/>
+        <trans id="tra_37" src="prp_22" dst="prp_38"/>
+    </tph>
+    <ard>
+        <dep id="dep_01" independent="prp_19" dependent="prp_5"/>
+        <dep id="dep_02" independent="prp_21" dependent="prp_5"/>
+        <dep id="dep_03" independent="prp_23" dependent="prp_5"/>
+        <dep id="dep_04" independent="prp_25" dependent="prp_19"/>
+        <dep id="dep_05" independent="prp_25" dependent="prp_25"/>
+        <dep id="dep_06" independent="prp_24" dependent="prp_25"/>
+        <dep id="dep_07" independent="prp_27" dependent="prp_5"/>
+        <dep id="dep_08" independent="prp_26" dependent="prp_27"/>
+        <dep id="dep_09" independent="prp_28" dependent="prp_19"/>
+        <dep id="dep_10" independent="prp_29" dependent="prp_19"/>
+        <dep id="dep_11" independent="prp_31" dependent="prp_21"/>
+        <dep id="dep_12" independent="prp_30" dependent="prp_21"/>
+        <dep id="dep_13" independent="prp_33" dependent="prp_21"/>
+        <dep id="dep_14" independent="prp_32" dependent="prp_21"/>
+        <dep id="dep_15" independent="prp_36" dependent="prp_23"/>
+        <dep id="dep_16" independent="prp_38" dependent="prp_23"/>
+        <dep id="dep_17" independent="prp_37" dependent="prp_23"/>
+        <dep id="dep_18" independent="prp_35" dependent="prp_23"/>
+        <dep id="dep_19" independent="prp_34" dependent="prp_23"/>
+    </ard>
+
+
+</hml>

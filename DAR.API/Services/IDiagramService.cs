@@ -1,4 +1,4 @@
-namespace DAR.Services
+namespace DAR.API.Services
 {
     public interface IDiagramService
     {
