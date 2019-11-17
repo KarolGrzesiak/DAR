@@ -16,10 +16,10 @@ namespace DAR.API.Infrastructure
         public DbSet<Domain> Domains { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<Attribute> Attributes { get; set; }
-        public DbSet<Reference> References { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<Transformation> TPHs { get; set; }
         public DbSet<Dependency> ARDs { get; set; }
+        public DbSet<Reference> References { get; set; }
 
         public DiagramContext(DbContextOptions<DiagramContext> options) : base(options)
         {
@@ -29,7 +29,11 @@ namespace DAR.API.Infrastructure
         {
             builder.ApplyConfiguration(new HMLEntityTypeConfiguration());
             builder.ApplyConfiguration(new PropertyEntityTypeConfiguration());
-            builder.ApplyConfiguration(new DomainEntityTypeConfiguration());
+            builder.ApplyConfiguration(new ARDEntityTypeConfiguration());
+            builder.ApplyConfiguration(new TPHEntityTypeConfiguration());
+            builder.ApplyConfiguration(new TypeEntityTypeConfiguration());
+            builder.ApplyConfiguration(new AttributeEntityTypeConfiguration());
+            builder.ApplyConfiguration(new ReferenceEntityTypeConfiguration());
         }
 
 

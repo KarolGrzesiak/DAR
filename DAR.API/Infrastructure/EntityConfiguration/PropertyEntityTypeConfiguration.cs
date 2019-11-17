@@ -8,7 +8,7 @@ namespace DAR.API.Infrastructure.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Property> builder)
         {
-            builder.HasMany(p => p.References).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.HasKey(p => new { p.Id, p.HMLId });
         }
     }
 }

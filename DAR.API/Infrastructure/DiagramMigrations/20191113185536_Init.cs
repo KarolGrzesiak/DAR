@@ -10,8 +10,7 @@ namespace DAR.Infrastructure.DiagramMigrations
                 name: "Domains",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<string>(nullable: false),
                     Ordered = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -23,8 +22,7 @@ namespace DAR.Infrastructure.DiagramMigrations
                 name: "HMLs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<string>(nullable: false),
                     Version = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -36,13 +34,12 @@ namespace DAR.Infrastructure.DiagramMigrations
                 name: "Values",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<string>(nullable: false),
                     Is = table.Column<string>(nullable: true),
                     From = table.Column<string>(nullable: true),
                     To = table.Column<string>(nullable: true),
                     Num = table.Column<string>(nullable: true),
-                    DomainId = table.Column<int>(nullable: true)
+                    DomainId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,27 +49,7 @@ namespace DAR.Infrastructure.DiagramMigrations
                         column: x => x.DomainId,
                         principalTable: "Domains",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ARDs",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Source = table.Column<string>(nullable: true),
-                    Destination = table.Column<string>(nullable: true),
-                    HMLId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ARDs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ARDs_HMLs_HMLId",
-                        column: x => x.HMLId,
-                        principalTable: "HMLs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,18 +57,18 @@ namespace DAR.Infrastructure.DiagramMigrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    HMLId = table.Column<string>(nullable: false),
                     Type = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     CLB = table.Column<string>(nullable: true),
                     Abbreviation = table.Column<string>(nullable: true),
                     Class = table.Column<string>(nullable: true),
                     Comm = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    HMLId = table.Column<int>(nullable: true)
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attributes", x => x.Id);
+                    table.PrimaryKey("PK_Attributes", x => new { x.Id, x.HMLId });
                     table.ForeignKey(
                         name: "FK_Attributes_HMLs_HMLId",
                         column: x => x.HMLId,
@@ -105,33 +82,13 @@ namespace DAR.Infrastructure.DiagramMigrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    HMLId = table.Column<int>(nullable: true)
+                    HMLId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Properties", x => x.Id);
+                    table.PrimaryKey("PK_Properties", x => new { x.Id, x.HMLId });
                     table.ForeignKey(
                         name: "FK_Properties_HMLs_HMLId",
-                        column: x => x.HMLId,
-                        principalTable: "HMLs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TPHs",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Source = table.Column<string>(nullable: true),
-                    Destination = table.Column<string>(nullable: true),
-                    HMLId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TPHs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TPHs_HMLs_HMLId",
                         column: x => x.HMLId,
                         principalTable: "HMLs",
                         principalColumn: "Id",
@@ -143,17 +100,17 @@ namespace DAR.Infrastructure.DiagramMigrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    HMLId = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    DomainId = table.Column<int>(nullable: true),
+                    DomainId = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Base = table.Column<string>(nullable: true),
                     Length = table.Column<string>(nullable: true),
-                    Scale = table.Column<string>(nullable: true),
-                    HMLId = table.Column<int>(nullable: true)
+                    Scale = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Types", x => x.Id);
+                    table.PrimaryKey("PK_Types", x => new { x.Id, x.HMLId });
                     table.ForeignKey(
                         name: "FK_Types_Domains_DomainId",
                         column: x => x.DomainId,
@@ -169,29 +126,108 @@ namespace DAR.Infrastructure.DiagramMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "References",
+                name: "ARDs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Destination = table.Column<string>(nullable: true),
-                    PropertyId = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(nullable: false),
+                    HMLId = table.Column<string>(nullable: false),
+                    Source = table.Column<string>(nullable: true),
+                    Destination = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_References", x => x.Id);
+                    table.PrimaryKey("PK_ARDs", x => new { x.Id, x.HMLId });
                     table.ForeignKey(
-                        name: "FK_References_Properties_PropertyId",
-                        column: x => x.PropertyId,
-                        principalTable: "Properties",
+                        name: "FK_ARDs_HMLs_HMLId",
+                        column: x => x.HMLId,
+                        principalTable: "HMLs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ARDs_Properties_Destination_HMLId",
+                        columns: x => new { x.Destination, x.HMLId },
+                        principalTable: "Properties",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ARDs_Properties_Source_HMLId",
+                        columns: x => new { x.Source, x.HMLId },
+                        principalTable: "Properties",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "References",
+                columns: table => new
+                {
+                    Destination = table.Column<string>(nullable: false),
+                    HMLId = table.Column<string>(nullable: false),
+                    Source = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_References", x => new { x.Source, x.Destination, x.HMLId });
+                    table.ForeignKey(
+                        name: "FK_References_Attributes_Destination_HMLId",
+                        columns: x => new { x.Destination, x.HMLId },
+                        principalTable: "Attributes",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_References_Properties_Source_HMLId",
+                        columns: x => new { x.Source, x.HMLId },
+                        principalTable: "Properties",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TPHs",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    HMLId = table.Column<string>(nullable: false),
+                    Source = table.Column<string>(nullable: true),
+                    Destination = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TPHs", x => new { x.Id, x.HMLId });
+                    table.ForeignKey(
+                        name: "FK_TPHs_HMLs_HMLId",
+                        column: x => x.HMLId,
+                        principalTable: "HMLs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TPHs_Properties_Destination_HMLId",
+                        columns: x => new { x.Destination, x.HMLId },
+                        principalTable: "Properties",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TPHs_Properties_Source_HMLId",
+                        columns: x => new { x.Source, x.HMLId },
+                        principalTable: "Properties",
+                        principalColumns: new[] { "Id", "HMLId" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ARDs_HMLId",
                 table: "ARDs",
                 column: "HMLId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ARDs_Destination_HMLId",
+                table: "ARDs",
+                columns: new[] { "Destination", "HMLId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ARDs_Source_HMLId",
+                table: "ARDs",
+                columns: new[] { "Source", "HMLId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attributes_HMLId",
@@ -204,14 +240,29 @@ namespace DAR.Infrastructure.DiagramMigrations
                 column: "HMLId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_References_PropertyId",
+                name: "IX_References_Destination_HMLId",
                 table: "References",
-                column: "PropertyId");
+                columns: new[] { "Destination", "HMLId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_References_Source_HMLId",
+                table: "References",
+                columns: new[] { "Source", "HMLId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TPHs_HMLId",
                 table: "TPHs",
                 column: "HMLId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TPHs_Destination_HMLId",
+                table: "TPHs",
+                columns: new[] { "Destination", "HMLId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TPHs_Source_HMLId",
+                table: "TPHs",
+                columns: new[] { "Source", "HMLId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Types_DomainId",
@@ -235,9 +286,6 @@ namespace DAR.Infrastructure.DiagramMigrations
                 name: "ARDs");
 
             migrationBuilder.DropTable(
-                name: "Attributes");
-
-            migrationBuilder.DropTable(
                 name: "References");
 
             migrationBuilder.DropTable(
@@ -248,6 +296,9 @@ namespace DAR.Infrastructure.DiagramMigrations
 
             migrationBuilder.DropTable(
                 name: "Values");
+
+            migrationBuilder.DropTable(
+                name: "Attributes");
 
             migrationBuilder.DropTable(
                 name: "Properties");

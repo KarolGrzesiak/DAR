@@ -11,31 +11,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAR.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class HMLController : ControllerBase
     {
         private readonly DiagramContext _diagramContext;
 
-        private readonly IDiagramService _diagramService;
-        public HMLController(DiagramContext context, IDiagramService diagramService)
+        public HMLController(DiagramContext context)
         {
             _diagramContext = context ?? throw new ArgumentNullException(nameof(context));
-            _diagramService = diagramService ?? throw new ArgumentNullException(nameof(diagramService));
 
         }
 
         [HttpGet]
-        [Route("/{id}")]
+        [Route("{id}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(HML), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<HML>> GetHMLByIdAsync(int id)
+        public async Task<ActionResult<HML>> GetHMLByIdAsync(string id)
         {
-            if (id <= 0)
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
 
-            var hml = await _diagramContext.HMLs.SingleOrDefaultAsync(h => h.Id == id);
+            var hml = await _diagramContext.HMLs.Include(h => h.Properties)
+
+                                                .Include(h => h.TPH)
+                                                .Include(h => h.ARD)
+                                                .Include(h => h.Attributes)
+                                                .Include(h => h.Types)
+                                                    .ThenInclude(t => t.Domain)
+                                                        .ThenInclude(d => d.Values)
+                                                .SingleOrDefaultAsync(h => h.Id == id);
 
             if (hml == null)
                 return NotFound();
@@ -47,9 +53,7 @@ namespace DAR.API.Controllers
         [ProducesResponseType(typeof(List<HML>), (int)HttpStatusCode.OK)]
         public async Task<List<HML>> GetHMLsAsync()
         {
-            var hmls = await _diagramContext.HMLs
-                                                .Include(h => h.Properties)
-                                                    .ThenInclude(p => p.References)
+            var hmls = await _diagramContext.HMLs.Include(h => h.Properties)
                                                 .Include(h => h.TPH)
                                                 .Include(h => h.ARD)
                                                 .Include(h => h.Attributes)
@@ -66,7 +70,10 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> CreateHMLAsync([FromBody] HML hmlFile)
         {
+            hmlFile.Id = Guid.NewGuid().ToString();
             _diagramContext.Add(hmlFile);
+
+
             if (await _diagramContext.SaveChangesAsync() == 0)
                 return BadRequest();
 
@@ -78,7 +85,7 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> DeleteHMLAsync(int id)
+        public async Task<ActionResult> DeleteHMLAsync(string id)
         {
             var hml = _diagramContext.HMLs.SingleOrDefault(h => h.Id == id);
             if (hml == null)

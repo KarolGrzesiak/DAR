@@ -8,7 +8,7 @@ namespace DAR.API.Model
     [XmlRoot(ElementName = "value")]
     public class Value
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [XmlAttribute(AttributeName = "is")]
         public string Is { get; set; }
         [XmlAttribute(AttributeName = "from")]
@@ -22,7 +22,7 @@ namespace DAR.API.Model
     [XmlRoot(ElementName = "domain")]
     public class Domain
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [XmlElement(ElementName = "value")]
         public List<Value> Values { get; set; }
         [XmlAttribute(AttributeName = "ordered")]
@@ -46,6 +46,9 @@ namespace DAR.API.Model
         public string Length { get; set; }
         [XmlAttribute(AttributeName = "scale")]
         public string Scale { get; set; }
+
+        public HML HML { get; set; }
+        public string HMLId { get; set; }
     }
 
 
@@ -68,15 +71,21 @@ namespace DAR.API.Model
         public string Comm { get; set; }
         [XmlElement(ElementName = "desc")]
         public string Description { get; set; }
+        public HML HML { get; set; }
+        public string HMLId { get; set; }
     }
 
 
     [XmlRoot(ElementName = "attref")]
     public class Reference
     {
-        public int Id { get; set; }
         [XmlAttribute(AttributeName = "ref")]
         public string Destination { get; set; }
+        public string HMLId { get; set; }
+        public Attribute Attribute { get; set; }
+
+        public string Source { get; set; }
+        public Property Property { get; set; }
     }
 
     [XmlRoot(ElementName = "property")]
@@ -86,6 +95,18 @@ namespace DAR.API.Model
         public List<Reference> References { get; set; }
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
+
+
+        public HML HML { get; set; }
+        public string HMLId { get; set; }
+    }
+    public class PropertyAttributes
+    {
+        public string HMLId { get; set; }
+        public string PropertyId { get; set; }
+        public Property Property { get; set; }
+        public string AttributeId { get; set; }
+        public Attribute Attribute { get; set; }
     }
 
 
@@ -99,6 +120,11 @@ namespace DAR.API.Model
         public string Source { get; set; }
         [XmlAttribute(AttributeName = "dst")]
         public string Destination { get; set; }
+        public Property SourceProperty { get; set; }
+        public Property DestinationProperty { get; set; }
+        public HML HML { get; set; }
+        public string HMLId { get; set; }
+
     }
 
 
@@ -111,6 +137,11 @@ namespace DAR.API.Model
         public string Source { get; set; }
         [XmlAttribute(AttributeName = "dependent")]
         public string Destination { get; set; }
+        public Property SourceProperty { get; set; }
+        public Property DestinationProperty { get; set; }
+
+        public HML HML { get; set; }
+        public string HMLId { get; set; }
     }
 
 
@@ -118,7 +149,7 @@ namespace DAR.API.Model
     [XmlRoot(ElementName = "hml")]
     public class HML
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [XmlArray(ElementName = "type_set")]
 
         [XmlArrayItem(ElementName = "type")]
@@ -144,5 +175,6 @@ namespace DAR.API.Model
 
         [XmlAttribute(AttributeName = "version")]
         public string Version { get; set; }
+
     }
 }
