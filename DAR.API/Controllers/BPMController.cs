@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BPMN;
+using System.Xml.Serialization;
 using DAR.API.Infrastructure;
 using DAR.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,8 @@ namespace DAR.API.Controllers
                 return NotFound();
 
             _bpmService.CreateBPM(id, hml.ARD);
+            // var serializer = new XmlSerializer(typeof(tDefinitions));
+            // var document = serializer.Deserialize(new StreamReader("bpmneditor.xml"));
 
             return Ok();
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using BPMN;
+using DAR.API.Helpers;
 using DAR.API.Infrastructure;
 using DAR.API.Model;
 using DAR.API.Services;
@@ -24,7 +24,7 @@ namespace DAR.API
 {
     public class Startup
     {
-        private Container container = new Container();
+        private Container _container = new Container();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,7 +40,7 @@ namespace DAR.API
                 options.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-            services.AddSimpleInjector(container, options =>
+            services.AddSimpleInjector(_container, options =>
             {
                 options.AddAspNetCore()
                 .AddControllerActivation();
@@ -71,11 +71,11 @@ namespace DAR.API
                 app.UseHsts();
             }
 
-            app.UseSimpleInjector(container);
+            app.UseSimpleInjector(_container);
 
 
             InitializeContainer();
-            container.Verify();
+            _container.Verify();
 
             app.UseHttpsRedirection();
             app.UseMvcWithDefaultRoute();
@@ -90,7 +90,17 @@ namespace DAR.API
         private void InitializeContainer()
         {
             RegisterServices();
-            container.Register<Editor>();
+            RegisterHelpers();
+        }
+
+        private void RegisterHelpers()
+        {
+            Assembly assembly = typeof(BPMModeler).Assembly;
+            var types = assembly.GetTypes().Where(t => t.IsClass && t.Namespace == typeof(BPMModeler).Namespace);
+            foreach (var type in types)
+            {
+                _container.Register(type);
+            }
         }
 
         private void RegisterServices()
@@ -99,7 +109,7 @@ namespace DAR.API
             var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && t.Name.EndsWith("Service"));
             foreach (var type in serviceTypes)
             {
-                container.Register(type.GetInterfaces().Single(), type);
+                _container.Register(type.GetInterfaces().Single(), type);
             }
 
         }

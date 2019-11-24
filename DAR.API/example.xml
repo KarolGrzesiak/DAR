@@ -328,13 +328,13 @@
         <trans id="tra_37" src="prp_22" dst="prp_38"/>
     </tph>
     <ard>
+        <dep id="dep_06" independent="prp_24" dependent="prp_25"/>
         <dep id="dep_01" independent="prp_19" dependent="prp_5"/>
         <dep id="dep_02" independent="prp_21" dependent="prp_5"/>
         <dep id="dep_03" independent="prp_23" dependent="prp_5"/>
-        <dep id="dep_04" independent="prp_25" dependent="prp_19"/>
-        <dep id="dep_06" independent="prp_24" dependent="prp_25"/>
         <dep id="dep_07" independent="prp_27" dependent="prp_5"/>
         <dep id="dep_08" independent="prp_26" dependent="prp_27"/>
+        <dep id="dep_04" independent="prp_25" dependent="prp_19"/>
         <dep id="dep_09" independent="prp_28" dependent="prp_19"/>
         <dep id="dep_10" independent="prp_29" dependent="prp_19"/>
         <dep id="dep_11" independent="prp_31" dependent="prp_21"/>

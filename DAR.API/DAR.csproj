@@ -10,7 +10,5 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0"/>
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.7.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4"/>
-    <PackageReference Include="BPMN.Sharp" Version="1.0.7"/>
-    <PackageReference Include="System.Drawing.Common" Version="4.6.0"/>
   </ItemGroup>
 </Project>
