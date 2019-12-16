@@ -35,6 +35,7 @@ namespace DAR.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddXmlSerializerFormatters().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling =
@@ -73,18 +74,24 @@ namespace DAR.API
 
             app.UseSimpleInjector(_container);
 
-
-            InitializeContainer();
-            _container.Verify();
-
-            app.UseHttpsRedirection();
-            app.UseMvcWithDefaultRoute();
-
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "DAR.API V1");
             });
+
+            InitializeContainer();
+            _container.Verify();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            app.UseHttpsRedirection();
+
+            app.UseMvcWithDefaultRoute();
+
         }
 
         private void InitializeContainer()

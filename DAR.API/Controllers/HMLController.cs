@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using DAR.API.Infrastructure;
 using DAR.API.Model;
 using DAR.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +18,11 @@ namespace DAR.API.Controllers
     public class HMLController : ControllerBase
     {
         private readonly DiagramContext _diagramContext;
+        private readonly IHMLService _hmlService;
 
-        public HMLController(DiagramContext context)
+        public HMLController(DiagramContext context, IHMLService hmlService)
         {
+            _hmlService = hmlService;
             _diagramContext = context ?? throw new ArgumentNullException(nameof(context));
 
         }
@@ -50,8 +54,8 @@ namespace DAR.API.Controllers
 
         }
         [HttpGet]
-        [ProducesResponseType(typeof(List<HML>), (int)HttpStatusCode.OK)]
-        public async Task<List<HML>> GetHMLsAsync()
+        [ProducesResponseType(typeof(IEnumerable<HML>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<HML>>> GetHMLsAsync()
         {
             var hmls = await _diagramContext.HMLs.Include(h => h.Properties)
                                                 .Include(h => h.TPH)
@@ -68,16 +72,14 @@ namespace DAR.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<ActionResult> CreateHMLAsync([FromBody] HML hmlFile)
+        public async Task<ActionResult> CreateHMLsAsync(IFormCollection files)
         {
-            hmlFile.Id = Guid.NewGuid().ToString();
-            _diagramContext.Add(hmlFile);
-
+            _diagramContext.Add(_hmlService.ConvertToHML(files.Files[0]));
 
             if (await _diagramContext.SaveChangesAsync() == 0)
                 return BadRequest();
 
-            return CreatedAtAction(nameof(GetHMLByIdAsync), new { id = hmlFile.Id }, null);
+            return CreatedAtAction(nameof(GetHMLByIdAsync), new { id = files.Files[0].FileName }, null);
         }
 
         [HttpDelete]
