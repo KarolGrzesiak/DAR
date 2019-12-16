@@ -1,8 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import vuetify from "./plugins/vuetify";
+import router from "./router";
+import ApiService from "./services/ApiService";
+Vue.config.productionTip = false;
 
-Vue.config.productionTip = false
-
+ApiService.init("https://localhost:5001/");
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  router,
+  vuetify,
+  render: h => h(App)
+}).$mount("#app");
