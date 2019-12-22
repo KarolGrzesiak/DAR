@@ -27,9 +27,6 @@ namespace DAR.API.Services
                 files.Add(new FileParameter(File.ReadAllBytes(name + fileExtension), name + fileExtension));
                 File.Delete(name + fileExtension);
             }
-
-
-
             _camunda.RepositoryService.Deploy(Guid.NewGuid().ToString(), files);
 
         }

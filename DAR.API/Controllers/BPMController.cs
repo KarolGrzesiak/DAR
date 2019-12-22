@@ -54,8 +54,10 @@ namespace DAR.API.Controllers
 
             _bpmService.CreateBPM(id, hml.ARD);
             _bpmService.SaveBPM(id);
+            var data = System.IO.File.ReadAllBytes(id + ".bpmn");
+            System.IO.File.Delete(id + ".bpmn");
 
-            return File(System.IO.File.ReadAllBytes(id + ".bpmn"), "application/octet-stream");
+            return File(data, "application/octet-stream");
         }
 
     }
