@@ -18,16 +18,18 @@ namespace DAR.API.Controllers
     {
         private readonly DiagramContext _diagramContext;
         private readonly IBPMService _bpmService;
+        private readonly IDMNService _dmnService;
 
-        public BPMController(DiagramContext diagramContext, IBPMService bpmService)
+        public BPMController(DiagramContext diagramContext, IBPMService bpmService, IDMNService dmnService)
         {
             _diagramContext = diagramContext ?? throw new System.ArgumentNullException(nameof(diagramContext));
             _bpmService = bpmService ?? throw new System.ArgumentNullException(nameof(bpmService));
+            _dmnService = dmnService ?? throw new System.ArgumentNullException(nameof(dmnService));
         }
 
         [HttpPost]
-        [Route("{id}/create")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(FileStreamResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult> GetBPMModelAsync(string id)
@@ -43,16 +45,20 @@ namespace DAR.API.Controllers
                                                     .ThenInclude(a => a.SourceProperty)
                                                         .ThenInclude(p => p.References)
                                                             .ThenInclude(r => r.Attribute)
+                                                .Include(h => h.Types)
+                                                    .ThenInclude(t => t.Domain)
+                                                        .ThenInclude(d => d.Values)
                                                 .SingleOrDefaultAsync(h => h.Id == id);
             if (hml == null)
                 return NotFound();
 
             _bpmService.CreateBPM(id, hml.ARD);
-            // var serializer = new XmlSerializer(typeof(tDefinitions));
-            // var document = serializer.Deserialize(new StreamReader("bpmneditor.xml"));
+            _bpmService.SaveBPM(id);
 
-            return Ok();
+            return File(System.IO.File.ReadAllBytes(id + ".bpmn"), "application/octet-stream");
         }
 
     }
+
+
 }

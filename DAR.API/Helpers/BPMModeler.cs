@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using DAR.API.Constants;
+using DAR.API.Extensions;
+using DAR.API.Model.BPM;
 using DAR.API.Model;
 
 namespace DAR.API.Helpers
@@ -11,16 +15,34 @@ namespace DAR.API.Helpers
     public class BPMModeler
     {
         private tDefinitions _root;
+        private string processId;
+
         public ICollection<BPMNShape> CreatedObjects { get; set; }
+        public string ProcessId
+        {
+            get => processId; set
+            {
+                processId = value;
+                if (_root.process != null && _root.BPMNDiagram != null)
+                {
+                    _root.process[0].id = processId;
+                    _root.BPMNDiagram[0].BPMNPlane.bpmnElement = new System.Xml.XmlQualifiedName(processId);
+                }
+
+
+            }
+        }
 
         public BPMModeler()
         {
             _root = new tDefinitions();
-            var processId = "process_1";
+            _root.targetNamespace = "http://bpmn.io/schema/bpmn";
+            ProcessId = "DeployedProcess";
             _root.process = new tProcess[] {
                 new tProcess{
-                    id = processId,
+                    id = ProcessId,
                     isExecutable = true,
+                    isExecutableSpecified = true,
                     isClosed = false,
                     processType = tProcessType.None
 
@@ -32,13 +54,13 @@ namespace DAR.API.Helpers
         };
             _root.BPMNDiagram[0].BPMNPlane = new BPMNPlane()
             {
-                bpmnElement = new System.Xml.XmlQualifiedName(processId)
+                bpmnElement = new System.Xml.XmlQualifiedName(ProcessId)
             };
 
         }
 
 
-        public tTask CreateTask(string id, string name, TaskType type)
+        public tTask CreateTask(string id, string name, TaskType type, ValuesType valuesType)
         {
             tTask[] currentTasks;
             tTask[] resultTasks;
@@ -46,14 +68,41 @@ namespace DAR.API.Helpers
             switch (type)
             {
                 case TaskType.User:
+
                     currentTasks = _root.process[0].userTask;
                     resultTasks = new tUserTask[(currentTasks?.Length ?? 0) + 1];
                     task = new tUserTask
                     {
-                        name = name,
+                        name = "Insert " + name,
                         id = id
                     };
+
                     _root.process[0].userTask = resultTasks as tUserTask[];
+                    var constraints = new Collection<Model.BPM.Constraint>();
+                    foreach (var constraint in valuesType.Constraints)
+                    {
+                        constraints.Add(new Model.BPM.Constraint
+                        {
+                            Name = constraint.Name.GetDisplayName(),
+                            Config = constraint.Config
+                        });
+                    }
+                    task.extensionElements = new tExtensionElements
+                    {
+                        FormData = new FormData
+                        {
+                            FormField = new FormField
+                            {
+                                Label = name,
+                                Id = id + "field",
+                                Type = valuesType.Name.GetDisplayName(),
+                                Validation = new Validation
+                                {
+                                    Constraints = constraints.ToArray()
+                                }
+                            }
+                        }
+                    };
 
                     break;
                 default:
@@ -62,17 +111,19 @@ namespace DAR.API.Helpers
                     _root.process[0].businessRuleTask = resultTasks as tBusinessRuleTask[];
                     task = new tBusinessRuleTask
                     {
-                        name = name,
-                        id = id
+                        name = "Calculate " + name,
+                        id = id,
+                        DecisionReference = "",
+                        OutputType = valuesType.Name.GetDisplayName()
                     };
 
                     break;
             }
+
             if (currentTasks != null)
                 Array.Copy(currentTasks, resultTasks, currentTasks.Length);
             resultTasks[resultTasks.Length - 1] = task;
             return task;
-            // CreateShape(id, BPMConstants.TaskWidth, BPMConstants.TaskHeight
         }
 
 
@@ -211,6 +262,7 @@ namespace DAR.API.Helpers
                 var serializer = new XmlSerializer(typeof(tDefinitions));
                 serializer.Serialize(file, _root);
             }
+
         }
     }
 

@@ -16,7 +16,7 @@ namespace DAR.API.Services
                 hml = (HML)serializer.Deserialize(stream);
 
             }
-            hml.Id = source.FileName;
+            hml.Id = Path.GetFileNameWithoutExtension(source.FileName);
             return hml;
         }
     }

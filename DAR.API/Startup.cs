@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using CamundaClient;
 using DAR.API.Helpers;
 using DAR.API.Infrastructure;
+using DAR.API.Model.BPM;
+using DAR.API.Model.DMN;
 using DAR.API.Model;
 using DAR.API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +22,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using SimpleInjector;
 using Swashbuckle.AspNetCore.Swagger;
+using Newtonsoft.Json;
 
 namespace DAR.API
 {
@@ -39,7 +43,7 @@ namespace DAR.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddXmlSerializerFormatters().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling =
-                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                   ReferenceLoopHandling.Ignore;
             });
             services.AddSimpleInjector(_container, options =>
             {
@@ -96,8 +100,16 @@ namespace DAR.API
 
         private void InitializeContainer()
         {
+
             RegisterServices();
             RegisterHelpers();
+
+            RegisterCamundaClient();
+        }
+
+        private void RegisterCamundaClient()
+        {
+            _container.Register<CamundaEngineClient>(() => new CamundaEngineClient(new Uri(ReadCamundaAddress()), null, null), Lifestyle.Scoped);
         }
 
         private void RegisterHelpers()
@@ -106,17 +118,18 @@ namespace DAR.API
             var types = assembly.GetTypes().Where(t => t.IsClass && t.Namespace == typeof(BPMModeler).Namespace);
             foreach (var type in types)
             {
-                _container.Register(type);
+                _container.Register(type, type, Lifestyle.Scoped);
             }
         }
 
         private void RegisterServices()
         {
-            Assembly assembly = typeof(BPMService).Assembly;
-            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && t.Name.EndsWith("Service"));
+            Assembly assembly = typeof(IBPMService).Assembly;
+            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && t.Name.EndsWith("Service") && t.Namespace == typeof(IBPMService).Namespace);
+            System.Console.WriteLine(serviceTypes);
             foreach (var type in serviceTypes)
             {
-                _container.Register(type.GetInterfaces().Single(), type);
+                _container.Register(type.GetInterfaces().Single(), type, Lifestyle.Scoped);
             }
 
         }
@@ -124,6 +137,10 @@ namespace DAR.API
         private string ReadConnectionString()
         {
             return Configuration.GetConnectionString("DefaultConnectionString");
+        }
+        private string ReadCamundaAddress()
+        {
+            return Configuration.GetValue<string>("CamundaAddress");
         }
     }
 

@@ -10,5 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0"/>
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.7.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4"/>
+    <PackageReference Include="BerndRuecker.Sample.CamundaClient" Version="*"/>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1"/>
   </ItemGroup>
 </Project>

@@ -50,7 +50,7 @@ namespace DAR.API.Controllers
             if (hml == null)
                 return NotFound();
 
-            return hml;
+            return Ok(hml);
 
         }
         [HttpGet]
@@ -65,7 +65,7 @@ namespace DAR.API.Controllers
                                                     .ThenInclude(t => t.Domain)
                                                         .ThenInclude(d => d.Values)
                                                 .ToListAsync();
-            return hmls;
+            return Ok(hmls);
         }
 
 
@@ -74,12 +74,15 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> CreateHMLsAsync(IFormCollection files)
         {
-            _diagramContext.Add(_hmlService.ConvertToHML(files.Files[0]));
+            foreach (var file in files.Files)
+            {
+                _diagramContext.Add(_hmlService.ConvertToHML(file));
+            }
 
             if (await _diagramContext.SaveChangesAsync() == 0)
                 return BadRequest();
 
-            return CreatedAtAction(nameof(GetHMLByIdAsync), new { id = files.Files[0].FileName }, null);
+            return CreatedAtAction(nameof(GetHMLsAsync), null);
         }
 
         [HttpDelete]
