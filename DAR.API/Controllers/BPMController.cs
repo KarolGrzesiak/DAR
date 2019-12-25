@@ -32,7 +32,7 @@ namespace DAR.API.Controllers
         [ProducesResponseType(typeof(FileStreamResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult> GetBPMModelAsync(string id)
+        public async Task<IActionResult> GetBPMModelAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest();

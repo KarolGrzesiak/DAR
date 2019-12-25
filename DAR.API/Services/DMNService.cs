@@ -11,8 +11,6 @@ namespace DAR.API.Services
     {
         private readonly DMNModeler _dmnModeler;
 
-        private string _name = "DMN";
-
         public DMNService(DMNModeler dmnModeler)
         {
             _dmnModeler = dmnModeler ?? throw new System.ArgumentNullException(nameof(dmnModeler));

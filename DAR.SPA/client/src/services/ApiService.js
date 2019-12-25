@@ -12,7 +12,15 @@ const ApiService = {
     return axios.delete(url);
   },
   post(url, resource) {
-    return axios.post(url, resource);
+    return axios.post(url, resource, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Access-Control-*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, HEAD",
+        "Access-Control-Allow-Headers":
+          "Access-Control-*, Origin, X-Requested-With, Content-Type, Accept"
+      }
+    });
   }
 };
 

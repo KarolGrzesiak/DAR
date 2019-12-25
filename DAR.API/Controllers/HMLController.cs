@@ -72,7 +72,7 @@ namespace DAR.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<ActionResult> CreateHMLsAsync(IFormCollection files)
+        public async Task<IActionResult> CreateHMLsAsync(IFormCollection files)
         {
             foreach (var file in files.Files)
             {
@@ -90,7 +90,7 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> DeleteHMLAsync(string id)
+        public async Task<IActionResult> DeleteHMLAsync(string id)
         {
             var hml = _diagramContext.HMLs.SingleOrDefault(h => h.Id == id);
             if (hml == null)

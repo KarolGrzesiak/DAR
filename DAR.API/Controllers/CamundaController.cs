@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using DAR.API.Infrastructure;
+using DAR.API.Infrastructure.Settings;
 using DAR.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +19,10 @@ namespace DAR.API.Controllers
         private readonly IBPMService _bpmService;
         private readonly DiagramContext _diagramContext;
         private readonly IDMNService _dmnService;
-        public CamundaController(DiagramContext diagramContext, ICamundaService camundaService, IBPMService bpmService, IDMNService dmnService)
+        private readonly CamundaSettings _cammundaSettings;
+        public CamundaController(DiagramContext diagramContext, ICamundaService camundaService, IBPMService bpmService, IDMNService dmnService, CamundaSettings cammundaSettings)
         {
+            _cammundaSettings = cammundaSettings ?? throw new System.ArgumentNullException(nameof(cammundaSettings));
             _dmnService = dmnService ?? throw new System.ArgumentNullException(nameof(dmnService));
             _diagramContext = diagramContext ?? throw new System.ArgumentNullException(nameof(diagramContext));
             _bpmService = bpmService ?? throw new System.ArgumentNullException(nameof(bpmService));
@@ -29,8 +33,8 @@ namespace DAR.API.Controllers
         [Route("deploy/{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.Redirect)]
-        public async Task<ActionResult> DeployAsync(string id)
+        [ProducesResponseType(typeof(Uri), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> DeployAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest();
@@ -56,7 +60,7 @@ namespace DAR.API.Controllers
             _dmnService.SaveDMN(id);
 
             _camundaService.Deploy(id);
-            return Ok();
+            return Created(new Uri(_cammundaSettings.Address), id);
 
         }
     }

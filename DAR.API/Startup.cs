@@ -23,6 +23,7 @@ using Microsoft.OpenApi.Models;
 using SimpleInjector;
 using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json;
+using DAR.API.Infrastructure.Settings;
 
 namespace DAR.API
 {
@@ -32,6 +33,7 @@ namespace DAR.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _container.Options.ResolveUnregisteredConcreteTypes = false;
         }
 
         public IConfiguration Configuration { get; }
@@ -60,12 +62,16 @@ namespace DAR.API
                 });
             });
             services.AddDbContextPool<DiagramContext>(options => options.UseSqlite(ReadConnectionString()));
+            InitializeContainer();
+
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSimpleInjector(_container);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,7 +82,6 @@ namespace DAR.API
                 app.UseHsts();
             }
 
-            app.UseSimpleInjector(_container);
 
             app.UseSwagger();
             app.UseSwaggerUI(s =>
@@ -84,17 +89,18 @@ namespace DAR.API
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "DAR.API V1");
             });
 
-            InitializeContainer();
-            _container.Verify();
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials());
+                .AllowCredentials().
+                WithExposedHeaders("Location"));
             app.UseHttpsRedirection();
 
             app.UseMvcWithDefaultRoute();
+            _container.Verify();
+
 
         }
 
@@ -103,13 +109,18 @@ namespace DAR.API
 
             RegisterServices();
             RegisterHelpers();
-
-            RegisterCamundaClient();
+            RegisterCamunda();
         }
 
-        private void RegisterCamundaClient()
+
+
+        private void RegisterCamunda()
         {
-            _container.Register<CamundaEngineClient>(() => new CamundaEngineClient(new Uri(ReadCamundaAddress()), null, null), Lifestyle.Scoped);
+            _container.Register<CamundaEngineClient>(() => new CamundaEngineClient(new Uri(ReadCamundaRESTAddress()), null, null), Lifestyle.Scoped);
+            _container.Register<CamundaSettings>(() => new CamundaSettings()
+            {
+                Address = ReadCamundaUIAddress()
+            }, Lifestyle.Singleton);
         }
 
         private void RegisterHelpers()
@@ -138,9 +149,14 @@ namespace DAR.API
         {
             return Configuration.GetConnectionString("DefaultConnectionString");
         }
-        private string ReadCamundaAddress()
+        private string ReadCamundaRESTAddress()
         {
-            return Configuration.GetValue<string>("CamundaAddress");
+            return Configuration.GetValue<string>("CamundaRESTAddress");
+        }
+        private string ReadCamundaUIAddress()
+        {
+            return Configuration.GetValue<string>("CamundaUIAddress");
+
         }
     }
 

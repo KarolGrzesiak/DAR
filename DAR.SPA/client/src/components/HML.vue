@@ -1,12 +1,7 @@
 <template>
   <v-container v-if="loading" fluid fill-height>
     <v-row justify="center" align="center">
-      <v-progress-circular
-        indeterminate
-        :size="150"
-        :width="8"
-        color="teal"
-      ></v-progress-circular>
+      <v-progress-circular indeterminate :size="150" :width="8" color="teal"></v-progress-circular>
     </v-row>
   </v-container>
   <v-container v-else fluid fill-height>
@@ -14,50 +9,34 @@
       <v-col cols="12">
         <v-row align="center" justify="center" no-gutters>
           <v-expansion-panels>
-            <v-expansion-panel
-              v-for="(id, i) in this.ids"
-              :key="i"
-              ref="expansionPanel"
-            >
+            <v-expansion-panel v-for="(id, i) in this.ids" :key="i" ref="expansionPanel">
               <v-expansion-panel-header>{{ id }}</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row justify="center">
-                  <v-btn color="teal" class="white--text mr-2" style="width:45%"
-                    >Deploy</v-btn
-                  >
+                  <v-btn
+                    color="teal"
+                    class="white--text mr-2"
+                    style="width:45%"
+                    @click="deploy(id)"
+                  >Deploy</v-btn>
                   <v-btn
                     color="error"
                     class="white--text"
                     style="width:45%"
                     @click="dialog = true"
-                    >Delete</v-btn
-                  >
+                  >Delete</v-btn>
                   <v-dialog v-model="dialog" max-width="290">
                     <v-card>
-                      <v-card-title class="headline"
-                        >Are you sure?</v-card-title
-                      >
+                      <v-card-title class="headline">Are you sure?</v-card-title>
 
-                      <v-card-text
-                        >Proceeding will permanently delete file.</v-card-text
-                      >
+                      <v-card-text>Proceeding will permanently delete file.</v-card-text>
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
 
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="dialog = false"
-                          >No</v-btn
-                        >
+                        <v-btn color="green darken-1" text @click="dialog = false">No</v-btn>
 
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="remove(id, i)"
-                          >Yes</v-btn
-                        >
+                        <v-btn color="green darken-1" text @click="remove(id, i)">Yes</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
@@ -79,6 +58,10 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="error" :top="true">
+      {{ errorMessage }}
+      <v-btn dark text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -90,7 +73,10 @@ export default {
       ids: [],
       loading: true,
       dialog: false,
-      files: []
+      files: [],
+      timeout: 2000,
+      snackbar: false,
+      errorMessage: ""
     };
   },
   mounted() {
@@ -104,7 +90,10 @@ export default {
   methods: {
     remove(id, position) {
       this.dialog = false;
-      ApiService.delete("/api/hml/" + id);
+      ApiService.delete("/api/hml/" + id).catch(error => {
+        this.errorMessage = error;
+        this.snackbar = true;
+      });
       this.ids.splice(position, 1);
       this.$refs.expansionPanel[position].isActive = false;
     },
@@ -119,15 +108,28 @@ export default {
         ApiService.post("/api/hml", formData)
           .then(() => {
             this.files.forEach(x => {
-              this.ids.push(x.name);
+              this.ids.push(x.name.replace(/\.[^/.]+$/, ""));
             });
           })
-          .catch(() => {})
+          .catch(error => {
+            this.errorMessage = error;
+            this.snackbar = true;
+          })
           .finally(() => {
             this.files = [];
             this.$refs.fileInput.isFocused = false;
           });
       }
+    },
+    deploy(id) {
+      ApiService.post("/api/camunda/deploy/" + id)
+        .then(response => {
+          window.open(response.headers.location, "_blank");
+        })
+        .catch(error => {
+          this.errorMessage = error;
+          this.snackbar = true;
+        });
     }
   }
 };
