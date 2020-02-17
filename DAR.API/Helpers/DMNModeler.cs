@@ -13,7 +13,7 @@ namespace DAR.API.Helpers
     {
 
         private (int, int) _lastDecisionCoords;
-        private tDefinitions _root;
+        private readonly tDefinitions _root;
         public DMNModeler()
         {
             _root = new tDefinitions

@@ -1,0 +1,32 @@
+\BOOKMARK [0][-]{chapter.1}{Wprowadzenie}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motywacja}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Cel pracy}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Struktura pracy}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{Metody reprezentacji proces\363w i decyzji}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Business Process Model and Notation}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Decision Model and Notation}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.3}{Attribute Relationship Diagrams}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.3.1}{Hekate Markup Langauge}{section.2.3}% 9
+\BOOKMARK [0][-]{chapter.3}{Projekt aplikacji}{}% 10
+\BOOKMARK [1][-]{section.3.1}{Podstawowe przypadki uzycia}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.2}{Architektura systemu}{chapter.3}% 12
+\BOOKMARK [2][-]{subsection.3.2.1}{Architektura N-tier}{section.3.2}% 13
+\BOOKMARK [2][-]{subsection.3.2.2}{Architektura klient-serwer}{section.3.2}% 14
+\BOOKMARK [1][-]{section.3.3}{Schemat projektu}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.4}{Komponenty}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.5}{Schemat interakcji}{chapter.3}% 17
+\BOOKMARK [0][-]{chapter.4}{Implementacja}{}% 18
+\BOOKMARK [1][-]{section.4.1}{Stos technologiczny}{chapter.4}% 19
+\BOOKMARK [2][-]{subsection.4.1.1}{Technologie front-end}{section.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.1.2}{Technologie back-end}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.3}{Zewnetrzny System}{section.4.1}% 22
+\BOOKMARK [1][-]{section.4.2}{Schemat bazy danych}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.3}{Schemat klas}{chapter.4}% 24
+\BOOKMARK [0][-]{chapter.5}{Ewaluacja}{}% 25
+\BOOKMARK [1][-]{section.5.1}{Model ARD}{chapter.5}% 26
+\BOOKMARK [1][-]{section.5.2}{Interfejs uzytkownika}{chapter.5}% 27
+\BOOKMARK [1][-]{section.5.3}{Camunda}{chapter.5}% 28
+\BOOKMARK [1][-]{section.5.4}{Podsumowanie wynik\363w}{chapter.5}% 29
+\BOOKMARK [0][-]{chapter.6}{Podsumowanie}{}% 30
+\BOOKMARK [1][-]{section.6.1}{Wnioski}{chapter.6}% 31
+\BOOKMARK [1][-]{section.6.2}{Mozliwe kierunki rozwoju aplikacji}{chapter.6}% 32

@@ -17,13 +17,11 @@ namespace DAR.API.Controllers
     [ApiController]
     public class HMLController : ControllerBase
     {
-        private readonly DiagramContext _diagramContext;
         private readonly IHMLService _hmlService;
 
-        public HMLController(DiagramContext context, IHMLService hmlService)
+        public HMLController(IHMLService hmlService)
         {
-            _hmlService = hmlService;
-            _diagramContext = context ?? throw new ArgumentNullException(nameof(context));
+            _hmlService = hmlService ?? throw new ArgumentNullException(nameof(hmlService));
 
         }
 
@@ -37,15 +35,7 @@ namespace DAR.API.Controllers
             if (string.IsNullOrEmpty(id))
                 return BadRequest();
 
-            var hml = await _diagramContext.HMLs.Include(h => h.Properties)
-
-                                                .Include(h => h.TPH)
-                                                .Include(h => h.ARD)
-                                                .Include(h => h.Attributes)
-                                                .Include(h => h.Types)
-                                                    .ThenInclude(t => t.Domain)
-                                                        .ThenInclude(d => d.Values)
-                                                .SingleOrDefaultAsync(h => h.Id == id);
+            var hml = await _hmlService.GetHMLAsync(id);
 
             if (hml == null)
                 return NotFound();
@@ -57,14 +47,7 @@ namespace DAR.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<HML>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<HML>>> GetHMLsAsync()
         {
-            var hmls = await _diagramContext.HMLs.Include(h => h.Properties)
-                                                .Include(h => h.TPH)
-                                                .Include(h => h.ARD)
-                                                .Include(h => h.Attributes)
-                                                .Include(h => h.Types)
-                                                    .ThenInclude(t => t.Domain)
-                                                        .ThenInclude(d => d.Values)
-                                                .ToListAsync();
+            var hmls = await _hmlService.GetHMLsAsync();
             return Ok(hmls);
         }
 
@@ -74,12 +57,13 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<IActionResult> CreateHMLsAsync(IFormCollection files)
         {
+            var hmls = new List<HML>();
             foreach (var file in files.Files)
             {
-                _diagramContext.Add(_hmlService.ConvertToHML(file));
+                hmls.Add(_hmlService.ConvertToHML(file));
             }
 
-            if (await _diagramContext.SaveChangesAsync() == 0)
+            if (!await _hmlService.CreateHMLsAsync(hmls))
                 return BadRequest();
 
             return CreatedAtAction(nameof(GetHMLsAsync), null);
@@ -92,11 +76,11 @@ namespace DAR.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> DeleteHMLAsync(string id)
         {
-            var hml = _diagramContext.HMLs.SingleOrDefault(h => h.Id == id);
+            var hml = await _hmlService.GetHMLAsync(id);
             if (hml == null)
                 return NotFound();
-            _diagramContext.Remove(hml);
-            if (await _diagramContext.SaveChangesAsync() == 0)
+
+            if (!await _hmlService.DeleteHMLAsync(hml))
                 return BadRequest();
             return NoContent();
         }

@@ -19,8 +19,8 @@ namespace DAR.API.Services
     public class BPMService : IBPMService
     {
         private IDictionary<string, ICollection<string>> _destinationIdToSourcesIds;
-        private ICollection<tEvent> _createdEvents;
-        private ICollection<BPMNShape> _createdObjects;
+        private readonly ICollection<tEvent> _createdEvents;
+        private readonly ICollection<BPMNShape> _createdObjects;
         private ICollection<tTask> _createdTasks;
         private readonly BPMModeler _bpmModeler;
         private double _numberForId;
@@ -42,8 +42,8 @@ namespace DAR.API.Services
         {
             _bpmModeler.ProcessId = id;
             CreateTasks(ard);
-            CreateEvents(ard);
-            ConnectEventsAndTasks(ard);
+            CreateEvents();
+            ConnectEventsAndTasks();
         }
 
         public void SaveBPM(string filename)
@@ -58,7 +58,7 @@ namespace DAR.API.Services
             return from + _numberForId++.ToString();
         }
 
-        private void ConnectEventsAndTasks(IEnumerable<Dependency> ard)
+        private void ConnectEventsAndTasks()
         {
             var startTasks = _createdTasks.Where(t => t is tUserTask);
 
@@ -135,7 +135,6 @@ namespace DAR.API.Services
                 double y = 0;
                 double x = 0;
                 var gatewayId = CreateUselessId("gatewayId");
-                var gateway = _bpmModeler.CreateGateway(gatewayId, GatewayType.Parallel);
                 var gatewayY = startTasks.Count() / 2 * BPMConstants.VerticalSpaceBetweenObjects + BPMConstants.GatewayHeight;
                 var startEventObject = _bpmModeler.CreateObject(CreateUselessId("eventObjectId"), startEvent.id, BPMConstants.EventWidth, BPMConstants.EventHeight, BPMConstants.EventWidth, gatewayY);
                 _createdObjects.Add(startEventObject);
@@ -163,7 +162,7 @@ namespace DAR.API.Services
             }
         }
 
-        private void CreateEvents(IEnumerable<Dependency> ard)
+        private void CreateEvents()
         {
             _createdEvents.Add(_bpmModeler.CreateEvent(CreateUselessId("startEventId"), EventType.Start));
             _createdEvents.Add(_bpmModeler.CreateEvent(CreateUselessId("endEventId"), EventType.End));
@@ -212,8 +211,10 @@ namespace DAR.API.Services
 
         private ValuesType CreateValuesType(Model.Type type)
         {
-            var valuesType = new ValuesType();
-            valuesType.Constraints = Enumerable.Empty<DAR.API.Model.Constraint>();
+            var valuesType = new ValuesType
+            {
+                Constraints = Enumerable.Empty<DAR.API.Model.Constraint>()
+            };
             switch (type.Base.FirstCharToUpper())
             {
                 case (nameof(ValuesTypeName.Numeric)):

@@ -1,0 +1,35 @@
+<hml>
+    <types>
+        <type id="tpe_1" name="Temperature" base="numeric" length="5">
+            <desc>Reprezentuje temperaturę</desc>
+            <domain>
+                <value from="1" to="5"/>
+            </domain>
+        </type>
+        <type id="tpe_2" name="Integer" base="numeric" length="5">
+            <desc>Reprezentuje numer</desc>
+            <domain>
+                <value from="-10000" to="10000"/>
+            </domain>
+        </type>
+    </types>
+    <attributes>
+        <attr name="Thermostat" id="att_0" type="tpe_1"/>
+        <attr name="Something" id="att_1" type="tpe_2"/>
+    </attributes>
+    <properties>
+        <property id="prp_1">
+            <attref ref="att_0"/>
+        </property>
+        <property id="prp_2">
+            <attref ref="att_0"/>
+            <attref ref="att_1"/>
+        </property>
+    </properties>
+    <ard>
+        <dep id="dep_01" independent="prp_1" dependent="prp_2"/>
+        <dep id="dep_02" independent="prp_2" dependent="prp_3"/>
+        <dep id="dep_03" independent="prp_1" dependent="prp_4"/>
+        <dep id="dep_04" independent="prp_2" dependent="prp_4"/>
+    </ard>
+</hml>

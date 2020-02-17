@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Użytkownik as user
+actor :System zarządzający procesami: as env
+rectangle DAR {
+  user -- (Dodanie pliku HML)
+  user -- (Usunięcie pliku HML)
+  user -- (Wdrożenie pliku HML)
+  (Wdrożenie pliku HML) .> (Wygenerowanie modelu BPMN oraz DMN) : include
+  (Wygenerowanie modelu BPMN oraz DMN) .> (Wdrożenie procesu): include
+  (Wdrożenie procesu) -- env
+}
+@enduml
+

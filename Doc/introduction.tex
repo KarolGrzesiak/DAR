@@ -1,0 +1,55 @@
+\chapter{Wprowadzenie}
+\label{cha:wprowadzenie}
+ \emph{BPMN} (\emph{Business Process Model and Notation}~\cite{BPMN20}) oraz \emph{DMN} (\emph{Decision Model and Notation}~\cite{DMN12}) są powszechnie przyjętymi standardami służącymi do modelowania, opisywania oraz zarządzania procesami biznesowymi i decyzjami. Notacja BPMN służy głównie do graficznej reprezentacji procesów, natomiast DMN skupia się na enkapsulacji logiki decyzyjnej (reguł organizacji).
+
+ Model procesu zbudowany przy użyciu tych dwóch standardów posiada dużą siłę ekspresji i~może przynieść wiele korzyści dla firm używających systemów zarządzania wiedzą. Problem pojawia się jednak przy modelowaniu. Zajmują się tym głównie analitycy biznesowi, którzy, korzystając z~wiedzy biznesowej, używają swojego doświadczenia oraz umiejętności. Niestety sam proces pozyskiwania modeli bywa trudny do dokładnego zdefiniowania, przez co może być odbierany jako sławny efekt \emph{ATAMO}\footnote{,,And then a~miracle occurs`` -- fraza spopularyzowana przez kreskówki Sidney Harris, często używana w~pracach związanych z~BPM aby opisać działania, które występują ale są trudne do zdefiniowania.}. Innymi słowy, proces prototypowania modeli procesów nie jest łatwym zadaniem. 
+
+ Jednym z~możliwych rozwiązań jest wykorzystanie ARD (\emph{Attribute Relationship Diagrams}~\cite{ARD}) -- metody reprezentacji wiedzy dla ustrukturyzowanej specyfikacji systemu -- do stworzenia prototypów modeli procesów, a~następnie na tej podstawie wygenerowania odpowiednich diagramów w~notacjach \emph{BPMN} oraz \emph{DMN}~\cite{ARDtoBPM}. 
+
+%---------------------------------------------------------------------------
+
+\section{Motywacja}
+\label{sec:motywacja}
+Mając na uwadze szybki rozwój zarządzania procesami biznesowymi oraz związane z~tym problemy i~proponowane rozwiązania, tematyka generowania modeli jest aktualna, zatem próby implementacji generatorów modeli mogą być użyteczne w~badaniach naukowych i~przemyśle. 
+
+Metoda \emph{ARD} służy do prostego prototypowania modeli systemów, lecz standardy \emph{BPMN} oraz \emph{DMN} nadal królują jako podstawowa oraz najbardziej zrozumiała forma reprezentacji procesów i decyzji. Użytecznym narzędziem byłby system przekształcający prototypy \emph{ARD} zapisane w~plikach HML\footnote{Mówiąc o plikach HML, będę miał na myśli wersję \emph{ARDML}, jednak z~opcjonalnym fragmentem \emph{TPH}. Więcej pod adresem: \url{https://ai.ia.agh.edu.pl/wiki/hekate:hml1}.} (\emph{Hekate Markup Language}~\cite{HML}) do reprezentacji w~standardach \emph{BPMN} oraz \emph{DMN}, który następnie wdroży takie modele do zewnętrznego systemu posiadającego silniki procesowe oraz decyzyjne, co~umożliwi ich uruchomienie oraz ewaluację.
+
+%---------------------------------------------------------------------------
+\section{Cel pracy}
+\label{sec:celPracy}
+Celem pracy jest zaprojektowanie i~zaimplementowanie aplikacji internetowej ,,DAR''\footnote{Anagram akronimu \emph{ARD}.}, będącej generatorem modeli procesów biznesowych w~notacji \emph{BPMN} oraz decyzji w~notacji \emph{DMN} na bazie specyfikacji w~postaci plików \emph{HML}, opisujących diagramy zależności między atrybutami \emph{ARD}. Docelowy system powinien zostać zintegrowany z~wybranym środowiskiem wspierającym zarządzanie procesami biznesowymi oraz ewaluację decyzji, dzięki czemu umożliwi wygenerowanie modelu, a~następnie wdrożenie go na opisywanym środowisku. Dodatkowo powinien umożliwiać opcje uzupełnienia niezbędnych informacji, aby następnie możliwe było uruchomienie wybranego procesu, analiza jego działania i~obserwacja wyników.
+
+%---------------------------------------------------------------------------
+\section{Struktura pracy}
+\label{sec:strukturaPracy}
+Praca składa się z~następujących rozdziałów:
+\begin{itemize}
+	\item \textbf{Rozdział ~\ref{cha:podłożeTeoretyczne}} -- dokładniej opisuje pojęcia \emph{BPMN}, \emph{DMN}, \emph{ARD} oraz wprowadza podstawowe koncepcje związane z~dziedziną procesów biznesowych.
+	%\vspace{-5mm}
+	\item \textbf{Rozdział ~\ref{cha:projektAplikacji}} -- przedstawia architekturę systemu w~ujęciu abstrakcyjnym. Skupia się na schemacie działania, wydzielając odpowiednie komponenty. 
+    %\vspace{-5mm}
+    \item \textbf{Rozdział ~\ref{cha:implementacja}} -- pokazuje aplikację od strony implementacyjnej. Omawia wybrane technologie, prezentuje stos technologiczny, przybliża strukturę występującą w~bazie danych oraz schemat najważniejszych klas aplikacji. 
+        
+    \item \textbf{Rozdział ~\ref{cha:ewaluacja}} -- prezentuje działanie całej aplikacji na wybranym przykładzie, omawiając jednocześnie przebieg jej działania.
+    
+    \item \textbf{Rozdział ~\ref{cha:podsumowanie}} -- kończy całą pracę, podsumowując działanie systemu i~opisując zebrane spostrzeżenia oraz wnioski. Przedstawia możliwe kierunki rozwoju aplikacji.  
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

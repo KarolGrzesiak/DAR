@@ -1,0 +1,28 @@
+\chapter{Podsumowanie}
+\label{cha:podsumowanie}
+Rozdział kończy niniejszą pracę podsumowując działanie systemu oraz opisując zebrane wnioski. Dodatkowo przedstawia możliwe kierunki rozwoju aplikacji.
+
+%---------------------------------------------------------------------------
+\section{Wnioski}
+\label{sec:wnioski}
+W ramach niniejszej pracy został osiągnięty cel, jakim było zaprojektowanie i~zaimplementowanie aplikacji internetowej, będącej generatorem modeli w~notacji \emph{BPMN} oraz \emph{DMN} na bazie plików \emph{HML}, opisujących diagramy \emph{ARD} oraz integrację z~zewnętrznym systemem wspierającym zarządzanie procesami biznesowymi oraz ewaluację decyzji.
+
+Praca całościowo opisuje proces tworzenia aplikacji ,,DAR``, wprowadzając najpierw najważniejsze pojęcia używane w~pracy, by następnie przedstawić projekt aplikacji z~odpowiednimi schematami i~jego implementację wraz z~opisem wykorzystanych technologii. Finalnie praca prezentuje przebieg działania aplikacji na konkretnym przykładzie, pokazując dokładnie interfejs użytkownika.
+
+W projekcie wymagające dodatkowej implementacji okazało się tworzenie modeli \emph{BPMN} oraz \emph{DMN}, wszystko za sprawą nieaktualnych bibliotek do modelowania obiektów \emph{BPMN} oraz \emph{DMN} w~środowisku \emph{.NET}. Zadaniem prostym w~implementacji było stworzenie odpowiednich definicji zadań lub przejść, jednak tworzenie na tej podstawie konkretnych obiektów na diagramie okazało się być wymagające. Sam algorytm do wyciągania informacji z~pliku \emph{HML} i~odpowiednia transformacja informacji z~diagramu \emph{ARD} do \emph{BPMN} był tworzony głównie z~myślą o wydajności, mając na uwadze fakt, że w~jednej chwili może być obsługiwanych wiele plików \emph{HML}. Integracja z~systemem \emph{Camunda} również przysporzyła wiele problemów, ponieważ wymagała ona modyfikacji modeli \emph{BPMN} oraz \emph{DMN} o specyficzne dla tego systemu adnotacje i~informacje w~plikach wdrażanych na ten system. Organizacja tworząca system \emph{Camunda} zakłada, że wszystkie modele wdrażane na platformę \emph{Camunda} będą tworzone przez jej autorski edytor modeli. Ten edytor modeli nie udostępnia jednak \emph{API}, dlatego zaszła potrzeba modyfikacji zaimplementowanych w~aplikacji ,,DAR`` edytorów modeli, aby były zgodne ze standardem \emph{Camunda}. Największym wyzwaniem było odkrycie tego problemu, ponieważ \emph{API} wystawione przez \emph{Camunda} służące do wdrożeń modeli nie zwracało żadnych konkretnych błędów.
+\newpage
+
+%---------------------------------------------------------------------------
+\section{Możliwe kierunki rozwoju aplikacji}
+\label{sec:rozwójAplikacji}
+Główną możliwością rozwoju aplikacji jest wzbogacenie procesu związanego z~tworzenia modeli \emph{BPMN} oraz \emph{DMN}. W tym momencie wszystkie proste, niezależne własności z~diagramu \emph{ARD}, które potrzebne są jako dane wejściowe są umieszczane na samym początku modelu \emph{BPMN} i~dla każdego z~nich przypisana jest jedna aktywność wykonywalna. Podobnie w~przypadku skomplikowanych, zależnych własności -- do każdej jednej takiej własności przypisana jest jedna decyzja z~modelu \emph{DMN}. Jest to przypadek głębokości poziomu zero (poziomy głębokości wytłumaczone są w~pracy~\cite{ARDtoBPM}). Warto byłoby wprowadzić możliwość wyboru poziomu głębokości, aby proste niezależne własności były łączone w~grupy o wielkości zależnej od głębokości i~każdej takiej grupie byłyby przyporządkowywane odpowiednie zadania wykonywalne. Na tej samej zasadzie decyzje w~zależności od poziomu głębokości mogą odpowiadać nie jednej skomplikowanej, zależnej własności, a~przykładowo pewnej grupie. 
+
+Drugim z~możliwych kierunków rozwoju jest wprowadzenie reguł decyzyjnych dla tablic decyzyjnych w~modelu \emph{DMN}. Gdyby plik \emph{HML} rozszerzyć o takie reguły, aby mogły być one odpowiednio wydobyte i~wdrożone do modelu \emph{DMN} lub gdyby dostarczyć jakieś źródło takich reguł, tak aby użytkownik nie musiał ręcznie ich uzupełniać po wdrożeniu procesu, zaimplementowane rozwiązanie byłoby w~pełni zautomatyzowane.
+
+Pomysłem wartym rozważenia jest również rozbudowa aplikacji o wsparcie generacji modeli \emph{ARD}. W tym momencie aplikacja potrafi przetwarzać pliki \emph{HML}, opisujące diagram \emph{ARD}, jednak nie jest w~stanie użytkownikowi pokazać, jak taki diagram wygląda.
+
+Kolejną sprawą jest część \emph{TPH} w~pliku \emph{HML}. Zapisane w tej części informacje mogłyby być wykorzystane, tak jak w przypadku z poprzedniego akapitu, do zwrócenia diagramu \emph{TPH}, aby użytkownik mógł go fizycznie zobaczyć. Dodatkowo wykorzystanie diagramów \emph{TPH} pozwoliłoby ulepszyć tworzone modele \emph{BPMN} oraz \emph{DMN}.
+
+Patrząc bardziej od strony technicznej -- pierwszą rzeczą jest brak rozwiązania chmurowego. W tym momencie cała aplikacja jest uruchamiana lokalnie, potrzebny jest fizyczny komputer użytkownika wraz z~serwerem bazy danych i~trzema wolnymi portami odpowiednio dla aplikacji klienckiej, serwera ,,DAR'' oraz serwera \emph{Camunda}. Prostym rozwiązaniem jest wdrożenie całej aplikacji na chmurę. Dodatkowo dobrym pomysłem jest konteneryzacja systemu, szczególnie w~przypadku gdy szkielet aplikacyjny \emph{ASP .NET Core} jest bardzo dobrze przystosowany do konteneryzacji. To samo tyczy się aplikacji klienckiej. 
+
+Finalnie możliwą zmianą jest zastąpienie systemu \emph{Camunda} przez własną aplikację. Oczywiście byłoby to bardzo duże przedsięwzięcie, wymagające własnej implementacji silników procesowych i~decyzyjnych oraz całej logiki z~wykonywaniem procesów, a~także odpowiednim prezentowaniu działań, z~wyświetlaniem diagramów \emph{BPMN} oraz \emph{DMN} na czele.

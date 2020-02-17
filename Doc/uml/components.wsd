@@ -1,0 +1,43 @@
+@startuml components
+node "Serwer" {
+   node "DAR - REST API" {
+       package "HML"{
+           [Kontroler HML] 
+           [Kontroler HML] ..> [Serwis HML] : używa
+           [Serwis HML] - [Baza danych]
+       }
+        package "BPMN"{
+          [Kontroler BPMN] ..> [Serwis BPMN] : używa
+          [Serwis BPMN] ..> [BPMN Modeler]  : używa
+          [Serwis BPMN] - [Baza danych]
+       }
+        package "DMN"{
+        [Kontroler DMN] ..> [Serwis DMN] : używa
+          [Serwis DMN] ..> [DMN Modeler]  : używa
+          [Serwis DMN] - [Baza danych]
+       }
+      
+       package "Integracja"{
+           [Kontroler Integracyjny] ..> [Fasada DMN/BPMN/HML] : używa
+           [Fasada DMN/BPMN/HML] - [Serwis DMN]
+           [Fasada DMN/BPMN/HML] - [Serwis BPMN]
+           [Fasada DMN/BPMN/HML] - [Serwis HML]
+                       
+       }
+    } 
+}
+database "Baza danych" {
+}
+cloud "Aplikacja internetowa"{
+    node "DAR - SPA" {
+        [Komponent Home] - [Komponent HML] 
+        [Komponent HML] ..> [Serwis REST] : używa
+        [Serwis REST] - [Kontroler Integracyjny]    
+        [Serwis REST] - [Kontroler HML]    
+    } 
+}
+
+@enduml
+
+
+

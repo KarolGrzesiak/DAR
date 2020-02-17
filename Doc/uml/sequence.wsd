@@ -1,0 +1,44 @@
+@startuml sequence
+   actor "Użytkownik" as user 
+   participant "Komponent HML" as hmlKomponent
+   participant "Serwis REST" as rest
+   participant "Kontroler HML" as hmlKontroler
+   participant "Kontroler Integracyjny" as camunda
+   participant "Fasada DMN/BPMN/HML" as fasada
+   participant "Serwis HML" as hmlSerwis
+   participant "Serwis DMN" as dmn
+   participant "Serwis BPMN" as bpmn
+   database "Baza Danych" as baza
+   actor "Zewnętrzny system" as system
+
+
+   user ->  hmlKomponent : Dodaj plik
+   hmlKomponent -> rest : Wyślij plik
+   rest -> hmlKontroler : Stwórz obiekt HML
+   hmlKontroler -> hmlSerwis : Zapisz obiekt HML
+   hmlSerwis -> baza : Zapisz
+   baza --> hmlSerwis : rezultat
+   hmlSerwis --> hmlKontroler : rezultat
+   hmlKontroler --> rest : rezultat
+   rest --> hmlKomponent : rezultat
+   user -> hmlKomponent : Wdróż plik
+   hmlKomponent -> rest : Wyślij polecenie wdrożenia
+   rest -> camunda : Wdróż obiekt HML
+   camunda -> fasada : Wygeneruj modele
+   fasada -> hmlSerwis : Pobierz informacje o obiekcie 
+   hmlSerwis -> baza : Odczytaj 
+   baza --> hmlSerwis : informacje o obiekcie
+   hmlSerwis --> fasada : obiekt hml
+   fasada -> bpmn : Stwórz model BPMN
+   bpmn --> fasada : model BPMN
+   fasada -> dmn : Stwórz model DMN
+   dmn --> fasada : model DMN
+   fasada --> camunda : modele BPMN i~DMN
+   camunda -> fasada : Wdróż modele
+   fasada -> system : Wdróż modele
+   system --> fasada : rezultat
+   fasada --> camunda : rezultat
+   camunda --> rest : rezultat
+   rest --> hmlKomponent : rezultat
+   hmlKomponent -> system : przekierowanie
+@endum

@@ -14,19 +14,19 @@ namespace DAR.API.Helpers
 {
     public class BPMModeler
     {
-        private tDefinitions _root;
-        private string processId;
+        private readonly tDefinitions _root;
+        private string _processId;
 
         public ICollection<BPMNShape> CreatedObjects { get; set; }
         public string ProcessId
         {
-            get => processId; set
+            get => _processId; set
             {
-                processId = value;
+                _processId = value;
                 if (_root.process != null && _root.BPMNDiagram != null)
                 {
-                    _root.process[0].id = processId;
-                    _root.BPMNDiagram[0].BPMNPlane.bpmnElement = new System.Xml.XmlQualifiedName(processId);
+                    _root.process[0].id = _processId;
+                    _root.BPMNDiagram[0].BPMNPlane.bpmnElement = new System.Xml.XmlQualifiedName(_processId);
                 }
 
 
@@ -35,8 +35,10 @@ namespace DAR.API.Helpers
 
         public BPMModeler()
         {
-            _root = new tDefinitions();
-            _root.targetNamespace = "http://bpmn.io/schema/bpmn";
+            _root = new tDefinitions
+            {
+                targetNamespace = "http://bpmn.io/schema/bpmn"
+            };
             ProcessId = "DeployedProcess";
             _root.process = new tProcess[] {
                 new tProcess{

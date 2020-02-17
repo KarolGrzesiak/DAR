@@ -1,0 +1,374 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{BPMN20}{report}{}
+    \field{labeltitlesource}{title}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{{Business Process Model and Notation (BPMN) Version 2.0}}
+    \verb{url}
+    \verb http://www.omg.org/spec/BPMN/2.0/
+    \endverb
+    \list{institution}{1}{%
+      {Object Management Group (OMG)}%
+    }
+    \field{type}{techreport}
+    \field{year}{2011}
+  \endentry
+
+  \entry{DMN12}{report}{}
+    \field{labeltitlesource}{title}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{{Decision Model and Notation (DMN) Version 1.2}}
+    \verb{url}
+    \verb http://www.omg.org/spec/DMN/1.2
+    \endverb
+    \list{institution}{1}{%
+      {Object Management Group (OMG)}%
+    }
+    \field{type}{techreport}
+    \field{year}{2019}
+  \endentry
+
+  \entry{ARD}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=NGJ}{%
+         family={Nalepa},
+         familyi={N\bibinitperiod},
+         given={Grzegorz\bibnamedelima J.},
+         giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=WI}{%
+         family={Wojnicki},
+         familyi={W\bibinitperiod},
+         given={Igor},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \name{editor}{2}{}{%
+      {{hash=WDC}{%
+         family={Wilson},
+         familyi={W\bibinitperiod},
+         given={David\bibnamedelima C.},
+         giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=LHC}{%
+         family={Lane},
+         familyi={L\bibinitperiod},
+         given={H.\bibnamedelima Chad},
+         giveni={H\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {AAAI Press}%
+    }
+    \strng{namehash}{NGJWI1}
+    \strng{fullhash}{NGJWI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{FLAIRS-21: Proceedings of the twenty-first international
+  Florida Artificial Intelligence Research Society conference: 15--17 may 2008,
+  Coconut Grove, Florida, USA}
+    \field{title}{Towards Formalization of ARD+ Conceptual Design and
+  Refinement Method}
+    \list{location}{1}{%
+      {Menlo Park, California}%
+    }
+    \verb{file}
+    \verb GJN-FLAIRS2008-formal.pdf
+    \endverb
+    \field{year}{2008}
+  \endentry
+
+  \entry{ARDtoBPM}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=KK}{%
+         family={Kluza},
+         familyi={K\bibinitperiod},
+         given={Krzysztof},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=WP}{%
+         family={Wi{\'{s}}niewski},
+         familyi={W\bibinitperiod},
+         given={Piotr},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=AWT}{%
+         family={Adrian},
+         familyi={A\bibinitperiod},
+         given={Weronika\bibnamedelima T.},
+         giveni={W\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+      {{hash=LA}{%
+         family={Lig{\k{e}}za},
+         familyi={L\bibinitperiod},
+         given={Antoni},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \name{editor}{3}{}{%
+      {{hash=DC}{%
+         family={Douligeris},
+         familyi={D\bibinitperiod},
+         given={Christos},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=KD}{%
+         family={Karagiannis},
+         familyi={K\bibinitperiod},
+         given={Dimitris},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=AD}{%
+         family={Apostolou},
+         familyi={A\bibinitperiod},
+         given={Dimitris},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer International Publishing}%
+    }
+    \strng{namehash}{KK+1}
+    \strng{fullhash}{KKWPAWTLA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{abstract}{%
+    Business Process Model and Notation (BPMN) is a~well established standard
+  for modeling and managing process knowledge of organizations. Recently, the
+  Decision Model and Notation (DMN) standard has been proposed as
+  a~complementary technique to enact particular type of knowledge, namely the
+  organizational rules (decision logic). An integrated model of processes and
+  rules may bring numerous benefits to the knowledge management systems, but
+  the modeling process itself is not a trivial task. To this end, methods that
+  facilitate prototyping and semi-automatic construction of the integrated
+  model are of great importance. In this paper, we propose a~method for
+  generating business processes with decisions in BPMN+DMN standards, using
+  a~prototyping method called ARD. We present an algorithm that, starting from
+  an ARD model, generates an executable process model along with decision
+  specification. Such a model can be treated as a~structured rule base that
+  provides explicit inference flow determined by the process control flow.%
+    }
+    \field{booktitle}{Knowledge Science, Engineering and Management}
+    \field{isbn}{978-3-030-29551-6}
+    \field{pages}{615\bibrangedash 627}
+    \field{title}{From Attribute Relationship Diagrams to Process (BPMN) and
+  Decision (DMN) Models}
+    \list{location}{1}{%
+      {Cham}%
+    }
+    \field{year}{2019}
+  \endentry
+
+  \entry{HML}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://ai.ia.agh.edu.pl/wiki/hekate:hml1}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{Hekate Markup Language}
+  \endentry
+
+  \entry{BPMNBook}{book}{}
+    \name{author}{1}{}{%
+      {{hash=DS}{%
+         family={Drejewicz},
+         familyi={D\bibinitperiod},
+         given={Szymon},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwo Helion}%
+    }
+    \strng{namehash}{DS1}
+    \strng{fullhash}{DS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{9788324634033}
+    \field{title}{Zrozumie{\'c} BPMN. Modelowanie proces{\'o}w~biznesowych}
+    \verb{url}
+    \verb https://books.google.pl/books?id=U\_OGMwEACAAJ
+    \endverb
+    \field{year}{2012}
+  \endentry
+
+  \entry{DMNArticle}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{http://edusolution.pl/modelowanie-decyzji-za-pomoca-notacji-dmn-czesc-pierwsza/}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{Modelowanie decyzji za pomocą notacji DMN}
+  \endentry
+
+  \entry{DMNTable}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://training-course-material.com/training/Filip_Drools_Decision_Tables_in_Spreadsheets}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{Drools Decision Tables in Spreadsheets}
+  \endentry
+
+  \entry{ARDFirst}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=NGJ}{%
+         family={Nalepa},
+         familyi={N\bibinitperiod},
+         given={Grzegorz\bibnamedelima J.},
+         giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=LA}{%
+         family={Lig{\k{e}}za},
+         familyi={L\bibinitperiod},
+         given={Antoni},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IOS Press}%
+    }
+    \strng{namehash}{NGJLA1}
+    \strng{fullhash}{NGJLA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{Proceedings of the 2005 Conference on Software
+  Engineering: Evolution and Emerging Technologies}
+    \field{isbn}{1586035592}
+    \field{pages}{330–340}
+    \field{title}{Conceptual Modelling and Automated Implementation of
+  Rule-Based Systems}
+    \list{location}{1}{%
+      {NLD}%
+    }
+    \field{year}{2005}
+  \endentry
+
+  \entry{HTTP}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=AK}{%
+         family={Afsari},
+         familyi={A\bibinitperiod},
+         given={Kereshmeh},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=EC}{%
+         family={Eastman},
+         familyi={E\bibinitperiod},
+         given={Charles},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=SD}{%
+         family={Shelden},
+         familyi={S\bibinitperiod},
+         given={Dennis},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AKECSD1}
+    \strng{fullhash}{AKECSD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{SIGraDi 2016, XX Congressof the Iberoamerican Society of
+  Digital Graphics 9-11, November, 2016 -Buenos Aires, Argentina}
+    \field{pages}{907\bibrangedash 913}
+    \field{title}{Data Transmission Opportunities for Collaborative Cloud-Based
+  Building Information Modeling}
+    \field{year}{2016}
+  \endentry
+
+  \entry{HTTPSpecification}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://tools.ietf.org/html/rfc2616}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{Hypertext Transfer Protocol -- HTTP/1.1}
+  \endentry
+
+  \entry{CRUD}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://www.visual-paradigm.com/guide/development/what-is-rest-api/}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{What is REST API?}
+  \endentry
+
+  \entry{StackSurvey}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://insights.stackoverflow.com/survey/201}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{StackOverflow Developer Survey}
+  \endentry
+
+  \entry{WebBenchmark}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.techempower.com/benchmarks}}
+    \field{note}{Dostęp: 2019-12-20}
+    \field{title}{Web Framework Benchamrks}
+  \endentry
+
+  \entry{DI}{book}{}
+    \name{author}{2}{}{%
+      {{hash=SM}{%
+         family={Seemann},
+         familyi={S\bibinitperiod},
+         given={Mark},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=vDS}{%
+         prefix={van},
+         prefixi={v\bibinitperiod},
+         family={Deursen},
+         familyi={D\bibinitperiod},
+         given={Steven},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Manning Publications}%
+    }
+    \strng{namehash}{SMDSv1}
+    \strng{fullhash}{SMDSv1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{9781617294730}
+    \field{title}{Dependency Injection Principles, Practices, and Patterns}
+    \verb{url}
+    \verb https://books.google.pl/books?id=hLLoswEACAAJ
+    \endverb
+    \field{year}{2019}
+  \endentry
+
+  \entry{gjn2011hab}{book}{}
+    \name{author}{1}{}{%
+      {{hash=NGJ}{%
+         family={Nalepa},
+         familyi={N\bibinitperiod},
+         given={Grzegorz\bibnamedelima J.},
+         giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wydawnictwa AGH}%
+    }
+    \strng{namehash}{NGJ1}
+    \strng{fullhash}{NGJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Semantic Knowledge Engineering. A Rule-Based Approach}
+    \list{location}{1}{%
+      {Krak\'ow}%
+    }
+    \field{year}{2011}
+  \endentry
+\enddatalist
+\endinput

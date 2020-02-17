@@ -16,16 +16,12 @@ namespace DAR.API.Controllers
     public class CamundaController : ControllerBase
     {
         private readonly ICamundaService _camundaService;
-        private readonly IBPMService _bpmService;
-        private readonly DiagramContext _diagramContext;
-        private readonly IDMNService _dmnService;
         private readonly CamundaSettings _cammundaSettings;
-        public CamundaController(DiagramContext diagramContext, ICamundaService camundaService, IBPMService bpmService, IDMNService dmnService, CamundaSettings cammundaSettings)
+        private readonly IHMLService _hmlService;
+        public CamundaController(ICamundaService camundaService, IHMLService hmlService, CamundaSettings cammundaSettings)
         {
+            _hmlService = hmlService ?? throw new ArgumentNullException(nameof(_hmlService));
             _cammundaSettings = cammundaSettings ?? throw new System.ArgumentNullException(nameof(cammundaSettings));
-            _dmnService = dmnService ?? throw new System.ArgumentNullException(nameof(dmnService));
-            _diagramContext = diagramContext ?? throw new System.ArgumentNullException(nameof(diagramContext));
-            _bpmService = bpmService ?? throw new System.ArgumentNullException(nameof(bpmService));
             _camundaService = camundaService ?? throw new System.ArgumentNullException(nameof(camundaService));
         }
 
@@ -39,27 +35,11 @@ namespace DAR.API.Controllers
             if (string.IsNullOrEmpty(id))
                 return BadRequest();
 
-            var hml = await _diagramContext.HMLs.Include(h => h.ARD)
-                                        .ThenInclude(a => a.DestinationProperty)
-                                            .ThenInclude(p => p.References)
-                                                .ThenInclude(r => r.Attribute)
-                                    .Include(h => h.ARD)
-                                        .ThenInclude(a => a.SourceProperty)
-                                            .ThenInclude(p => p.References)
-                                                .ThenInclude(r => r.Attribute)
-                                    .Include(h => h.Types)
-                                        .ThenInclude(t => t.Domain)
-                                            .ThenInclude(d => d.Values)
-                                    .SingleOrDefaultAsync(h => h.Id == id);
+            var hml = await _hmlService.GetHMLWithARDAsync(id);
             if (hml == null)
                 return NotFound();
 
-            _bpmService.CreateBPM(id, hml.ARD);
-            _dmnService.CreateDMN(_bpmService.CreatedTasks, _bpmService.DestinationIdToSourcesIds);
-            _bpmService.SaveBPM(id);
-            _dmnService.SaveDMN(id);
-
-            _camundaService.Deploy(id);
+            _camundaService.Deploy(id, hml.ARD);
             return Created(new Uri(_cammundaSettings.Address), id);
 
         }

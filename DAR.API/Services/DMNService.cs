@@ -40,11 +40,11 @@ namespace DAR.API.Services
             foreach (var (task, decisionId) in taskToDecisionId)
             {
                 var sourceTasks = createdTasks.Where(t => destinationIdToSourceIds[task.id].Any(i => i == t.id));
-                CreateInput(task, decisionId, sourceTasks, taskToOutputId);
+                CreateInput(decisionId, sourceTasks, taskToOutputId);
             }
         }
 
-        private void CreateInput(tTask task, string decisionId, IEnumerable<tTask> sourceTasks, IDictionary<tTask, string> taskToOutputId)
+        private void CreateInput(string decisionId, IEnumerable<tTask> sourceTasks, IDictionary<tTask, string> taskToOutputId)
         {
             foreach (var sourceTask in sourceTasks)
             {

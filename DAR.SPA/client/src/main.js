@@ -5,7 +5,7 @@ import router from "./router";
 import ApiService from "./services/ApiService";
 Vue.config.productionTip = false;
 
-ApiService.init("https://localhost:5001/");
+ApiService.init("http://localhost:5000/");
 new Vue({
   router,
   vuetify,

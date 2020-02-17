@@ -1,0 +1,35 @@
+<hml>
+  <!-- attml starts here -->
+  <types>
+    ...
+  </types>
+ 
+  <attributes>
+    ...
+  </attributes>
+  <!-- attml ends here -->
+ 
+  <!-- ardml starts here -->
+  <properties>
+    ...
+  </properties>
+ 
+  <tph>
+    ...
+  </tph>
+ 
+  <ard>
+    ...
+  </ard>
+  <!-- ardml ends here -->
+ 
+  <!-- xttml starts here -->
+  <xtt>
+    ...
+  </xtt>
+  <!-- xttml ends here -->
+ 
+  <!-- extra system state specification -->
+  <states>
+  </states>
+</hml>

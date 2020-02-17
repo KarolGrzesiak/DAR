@@ -29,7 +29,7 @@ namespace DAR.API
 {
     public class Startup
     {
-        private Container _container = new Container();
+        private readonly Container _container = new Container();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,7 +38,6 @@ namespace DAR.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
@@ -67,7 +66,6 @@ namespace DAR.API
         }
 
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSimpleInjector(_container);
@@ -78,7 +76,6 @@ namespace DAR.API
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -88,7 +85,6 @@ namespace DAR.API
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "DAR.API V1");
             });
-
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
@@ -100,13 +96,10 @@ namespace DAR.API
 
             app.UseMvcWithDefaultRoute();
             _container.Verify();
-
-
         }
 
         private void InitializeContainer()
         {
-
             RegisterServices();
             RegisterHelpers();
             RegisterCamunda();
@@ -142,7 +135,6 @@ namespace DAR.API
             {
                 _container.Register(type.GetInterfaces().Single(), type, Lifestyle.Scoped);
             }
-
         }
 
         private string ReadConnectionString()
