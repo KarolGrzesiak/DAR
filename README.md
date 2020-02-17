@@ -1,4 +1,4 @@
-# DAR - Bachelor Thesis 
+# Bachelor Thesis 
 # Design and Implementation of Software for Process and Decision Models Generation based on Attribute Relationship Diagrams
 *\***\***\****Important***\***\***\** *Code here is definitely not production ready, nor I aimed it to be, the thesis was more about providing the proof of concept and the time was heavily limited. Overengineering is the worst.* *\***\***\****Important***\***\***\**
 
@@ -12,6 +12,6 @@ The thesis presents a design and implementation of the **"DAR"** web application
 Key technologies:
 - **ASP.NET Core** 
 - **VueJS** 
-- **Simple injector** 
+- **Simple Injector** 
 - **EF Core** 
 - **Camunda Workflow&Decision**
