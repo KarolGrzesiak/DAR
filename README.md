@@ -1,5 +1,5 @@
 # DAR - Bachelor Thesis 
-## Design and Implementation of Software for Process and Decision Models Generation based on Attribute Relationship Diagrams
+# Design and Implementation of Software for Process and Decision Models Generation based on Attribute Relationship Diagrams
 *\***\***\****Important***\***\***\** *Code here is definitely not production ready, nor I aimed it to be, the thesis was more about providing the proof of concept and the time was heavily limited. Overengineering is the worst.* *\***\***\****Important***\***\***\**
 
 [Quick presentation of the application](https://youtu.be/P9SBUGK77WY)   
