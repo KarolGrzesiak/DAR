@@ -11,7 +11,9 @@ Key technologies:
 - **VueJS** 
 - **Simple injector** 
 - **EF Core** 
-- **Camunda Workflow&Decision** 
+- **Camunda Workflow&Decision**
 
 [Quick presentation of core functionalities](https://youtu.be/P9SBUGK77WY)   
-[Documentation - Thesis (sadly only in Polish)](https://github.com/KarolGrzesiak/DAR/blob/master/Doc/grzesiak.pdf)
+[Documentation - Thesis (only in Polish, sadly) - Chapters 3 and 4 include a lot more technical stuff (e.g. architecture)](https://github.com/KarolGrzesiak/DAR/blob/master/Doc/grzesiak.pdf)  
+*Swagger API available after launching application* 
+
